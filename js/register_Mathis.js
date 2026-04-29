@@ -13,7 +13,7 @@ document.getElementById("registerformv2").addEventListener("submit", async (e) =
 
     try{
 
-        const response = await fetch("/api/register", {
+        const response = await fetch("/api/register_Mathis.php", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({email, password }),
