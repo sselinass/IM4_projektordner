@@ -20,7 +20,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
         const result = await response.json();
         console.log("result ist:", result);
     } catch (error) {
-        conaole.error("Error:", error);
+        console.error("Error:", error);
         alert("Error.", error);
     }
 });
