@@ -18,6 +18,6 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
         });
 
         const result = await response.json();
-        console.log(result);
+        console.log("result ist:", result);
     } catch (error) {}
 });
