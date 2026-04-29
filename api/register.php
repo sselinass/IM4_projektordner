@@ -15,7 +15,22 @@ session_start();
         $email = $data['email'];
         $password = $data['password'];
 
+        //Checken,ob user schon registriert ist
+        $stmt = $pdo-> prepare("SELECT email FROM users WHERE email = :email");
+        $stmt->execute([":email" => $email]);
+        if ($stmt->fetch()){
+            echo json_encode([
+                "status" => "error",
+                "message" => "Email is already registered"
+            ]);
+         exit;
+        }
+             
+        // Passwort verschlüsseln
+        $hashedPassword= password_hash($password, PASSWORD_DEFAULT);
+
         // in 2 Blöcken irgendwas mit Passwort sicherhiet stuff - so machen damit safe sonst kann jemand weitere Variablen in die Liste schreiben
+        // neuen User in die DB einfügen
         $insert =$pdo->prepare("INSERT INTO users (email, password) VALUES (:email, :pass)");
         $insert->execute([
             ":email" => $email,
