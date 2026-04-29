@@ -15,6 +15,13 @@ session_start();
         $email = $data['email'];
         $password = $data['password'];
 
+        // in 2 Blöcken irgendwas mit Passwort sicherhiet stuff - so machen damit safe sonst kann jemand weitere Variablen in die Liste schreiben
+        $insert =$pdo->prepare("INSERT INTO users (email, password) VALUES (:email, :pass)");
+        $insert->execute([
+            ":email" => $email,
+            ":pass" => $password
+        ]);
+
         //an JS zurückschicken
         echo json_encode([
             "status" => "success", 
