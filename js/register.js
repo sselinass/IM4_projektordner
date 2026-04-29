@@ -16,7 +16,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({ email, password }),
         });
-
+        
         const result = await response.json();
         console.log("result ist:", result);
     } catch (error) {}
