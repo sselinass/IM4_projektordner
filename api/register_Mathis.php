@@ -17,8 +17,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $data['email'];
     $password = $data['password'];
 
+    //checken ob die email schon existiert
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
+    $stmt->execute([
+        ":email" => $email
+    ]);
+    if ($stmt->fetch()) {
+        echo json_encode([
+            "status" => "error",
+            "message" => "Email already exists"
+        ]);
+        exit;
+    }
+
+    $hashedpassword = password_hash($password, PASSWORD_DEFAULT);
+
+    $insert = $pdo->prepare("INSERT INTO users (email, password) VALUES (:email, :pass)");
+    $insert->execute([
+        ":email" => $email,
+        ":pass" => $hashedpassword
+    ]);
+
     echo json_encode([
-        "Satus" => "success",
+        "status" => "success",
         "email" => $email,
     ]);
 

@@ -23,5 +23,8 @@ document.getElementById("registerformv2").addEventListener("submit", async (e) =
        
         const result = await response.json();
         console.log(result);
-    } catch (error) {}
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Error.", error);
+    }
 });
