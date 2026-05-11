@@ -45,7 +45,7 @@ body {
   width: 100%;
   max-width: var(--page_width);
   min-height: 852px;
-  padding: 157px 42px 0 42px;
+  padding: 120px 42px 0 42px;
 
   display: flex;
   flex-direction: column;
@@ -74,7 +74,7 @@ h1 {
   line-height: 20px;
   font-weight: 400;
   color: var(--color_text_light);
-  margin-bottom: 47px;
+  margin-bottom: 20px;
 }
 
 .button_group {
@@ -112,7 +112,7 @@ h1 {
 }
 
 .login_card {
-  padding-top: 157px;
+  padding-top: 120px;
 }
 
 .form_area {
@@ -171,4 +171,8 @@ h1 {
 
 .register_hint:hover {
   text-decoration: underline;
+}
+
+.register_card {
+  padding-top: 120px;
 }

@@ -1,27 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Register</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body>
-    <h1>Register</h1>
+<html lang="de-CH">
 
-    <form id="registerForm">
-      <div>
-        <label>Email</label>
-        <input type="email" id="email" required />
-      </div>
-      <div>
-        <label>Password</label>
-        <input type="password" id="password" required />
-      </div>
-      <button type="submit">Register</button>
-    </form>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | Ready Set Dinner</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
 
-    <p>Already have an account? <a href="login.html">Login here</a>.</p>
+<body>
+  <main class="auth_page">
+    <section class="auth_card register_card">
 
-    <script src="js/register.js"></script>
-  </body>
+      <img src="resources/assets/DinnerBell.svg" alt="Rennende Essensglocke" class="hero_image">
+
+      <h1>Register</h1>
+      <p class="subtitle">Please register to continue</p>
+
+      <form id="register_form" class="form_area">
+
+        <input type="email" id="email" name="email" class="form_input" placeholder="Email" required>
+
+        <input type="password" id="password" name="password" class="form_input" placeholder="Password" required>
+
+        <button type="submit" class="btn btn_primary">
+          Register
+        </button>
+
+        <a href="login.html" class="register_hint">
+          Already registered?
+        </a>
+
+        <p id="form_message" class="form_message"></p>
+
+      </form>
+
+    </section>
+  </main>
+
+  <script src="js/register.js"></script>
+</body>
+
 </html>
