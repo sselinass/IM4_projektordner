@@ -1,48 +1,41 @@
 <?php
-
+// register.php
 session_start();
-    header('Content-Type: application/json');
+header('Content-Type: application/json');
 
-    require_once '../system/config.php';
+require_once '../system/config.php';
 
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            
-        // hier wollen wir die Variablen entpacken
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        //entpacke die Daten
-        $data = json_decode(file_get_contents("php://input"), true);
+    $data = json_decode(file_get_contents("php://input"), true);
 
-        $email = $data['email'];
-        $password = $data['password'];
+    $email    = trim($data['email'] ?? '');
+    $password = trim($data['password'] ?? '');
 
-        //Checken,ob user schon registriert ist
-        $stmt = $pdo-> prepare("SELECT email FROM users WHERE email = :email");
-        $stmt->execute([":email" => $email]);
-        if ($stmt->fetch()){
-            echo json_encode([
-                "status" => "error",
-                "message" => "Email is already registered"
-            ]);
-         exit;
-        }
-             
-        // Passwort verschlüsseln
-        $hashedPassword= password_hash($password, PASSWORD_DEFAULT);
-
-        // in 2 Blöcken irgendwas mit Passwort sicherhiet stuff - so machen damit safe sonst kann jemand weitere Variablen in die Liste schreiben
-        // neuen User in die DB einfügen
-        $insert =$pdo->prepare("INSERT INTO users (email, password) VALUES (:email, :pass)");
-        $insert->execute([
-            ":email" => $email,
-            ":pass" => $password
-        ]);
-
-        //an JS zurückschicken
-        echo json_encode([
-            "status" => "success", 
-            "email" => $email
-        ]);
-
+    if (!$email || !$password) {
+        echo json_encode(["status" => "error", "message" => "Email and password are required"]);
+        exit;
     }
-   
-?>
+
+    // Check if email already exists
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = :email");
+    $stmt->execute([':email' => $email]);
+    if ($stmt->fetch()) {
+        echo json_encode(["status" => "error", "message" => "Email is already in use"]);
+        exit;
+    }
+
+    // Hash the password
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    // Insert the new user
+    $insert = $pdo->prepare("INSERT INTO users (email, password) VALUES (:email, :pass)");
+    $insert->execute([
+        ':email' => $email,
+        ':pass'  => $hashedPassword
+    ]);
+
+    echo json_encode(["status" => "success"]);
+} else {
+    echo json_encode(["status" => "error", "message" => "Invalid request method"]);
+}
