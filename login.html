@@ -1,27 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Login</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body>
-    <h1>Login</h1>
+<html lang="de-CH">
 
-    <form id="loginForm">
-      <div>
-        <label>Email</label>
-        <input type="email" id="email" required />
-      </div>
-      <div>
-        <label>Password</label>
-        <input type="password" id="password" required />
-      </div>
-      <button type="submit">Login</button>
-    </form>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Ready Set Dinner</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
 
-    <p>Don’t have an account? <a href="register.html">Register here</a>.</p>
+<body>
+  <main class="auth_page">
+    <section class="auth_card login_card">
 
-    <script src="js/login.js"></script>
-  </body>
+      <img src="resources/assets/DinnerBell.svg" alt="Rennende Essensglocke" class="hero_image">
+
+      <h1>Login</h1>
+      <p class="subtitle">Please sign in to continue</p>
+
+      <form id="login_form" class="form_area">
+
+        <input type="email" id="email" name="email" class="form_input" placeholder="Email" required>
+
+        <input type="password" id="password" name="password" class="form_input" placeholder="Password" required>
+
+        <button type="submit" class="btn btn_primary">
+          Login
+        </button>
+
+        <a href="register.html" class="register_hint">
+          New here? Create an account!
+        </a>
+
+        <p id="form_message" class="form_message"></p>
+
+      </form>
+
+    </section>
+  </main>
+
+  <script src="js/login.js"></script>
+</body>
+
 </html>
