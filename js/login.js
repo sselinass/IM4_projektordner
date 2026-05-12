@@ -29,7 +29,7 @@ login_form.addEventListener("submit", async function (event) {
     const result = await response.json();
 
     if (result.status === "success") {
-      window.location.href = "protected.html";
+      window.location.href = "home.html";
     } else {
       form_message.textContent = result.message || "Login fehlgeschlagen.";
     }
