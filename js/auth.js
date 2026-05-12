@@ -10,3 +10,5 @@ async function requireAuth() {
 
   return response.json(); // { email, user_id }
 }
+
+requireAuth();
