@@ -3,12 +3,15 @@
   --color_white: #ffffff;
   --color_black: #1B1B1B;
   --color_grey: #6e6e6e;
+  --color_light-grey: #f5f5f7;
 
   --color_accent-yellow: #FFF083;
   --color_accent-blue: #C9F5FF;
   --color_accent-pink: #F4C9FF;
   --color_accent-green: #EAFFC9;
   --color_accent-orange: #FFE3C9;
+
+  --color_error: #c0392b;
 
   /* BUTTONS */
   --button_height: 56px;
@@ -52,7 +55,6 @@ main {
 
 /*HEADINGS*/
 h1 {  
-  color: #2C2C2C;
   text-align: center;
   font-family: "Geologica", sans-serif;
   font-weight: 700;
@@ -75,7 +77,6 @@ h2 {
 }
 
 p {
-  color: #2C2C2C;
   font-family: "Roboto", sans-serif;
   font-weight: 300;
   font-style: normal;
@@ -90,7 +91,6 @@ p {
   line-height: 20px;
   font-weight: 400;
   color: var(--color_grey);
-  margin-bottom: 20px;
 }
 
 /* BUTTONS */
@@ -155,6 +155,55 @@ button, input {
   border: 2px solid var(--color_black);
 }
 
+/* BOTTOM NAVIGATION */
+.bottom_nav {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--page_width);
+  height: 74px;
+  border-top: 1px solid var(--color_black);
+  background: var(--color_white);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  z-index: 10;
+}
+
+.nav_link {
+  height: 100%;
+  color: #9aa4b2;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.nav_icon {
+  font-size: 22px;
+  line-height: 22px;
+}
+
+.nav_link.is_active {
+  color: var(--color_black);
+  position: relative;
+}
+
+.nav_link.is_active::before {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--color_accent-yellow);
+  z-index: -1;
+}
 /* =========================================================
    AUTHENTICATION PAGE
    ========================================================= */
@@ -198,7 +247,7 @@ button, input {
   display: flex;
   flex-direction: column;
   gap: 22px;
-  margin-top: 47px;
+  margin-top: 0px;
 }
 
 .form_area .btn {
@@ -206,12 +255,11 @@ button, input {
   cursor: pointer;
 }
 
-
 .form_message {
   min-height: 20px;
   font-size: 14px;
   line-height: 20px;
-  color: #c0392b;
+  color: var(--color_error);
 }
 
 .register_hint {
@@ -231,7 +279,7 @@ button, input {
 }
 
 /* =========================================================
-   APP PAGES: HOME / GOALS
+   APP PAGES: HOME
    ========================================================= */
 
 .app_body {
@@ -288,6 +336,8 @@ button, input {
   font-size: 14px;
   font-weight: 700;
   white-space: nowrap;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
 }
 
 .goal_image {
@@ -302,7 +352,8 @@ button, input {
 }
 
 .goal_points {
-  font-weight: 700;
+   font-family: "Roboto", sans-serif;
+  font-weight: 500;
   color: var(--color_black);
   margin-bottom: 18px;
 }
@@ -312,7 +363,7 @@ button, input {
   height: 20px;
   border: 1px solid var(--color_black);
   border-radius: 999px;
-  background: #eeeeee;
+  background: var(--color_light-grey);
   overflow: hidden;
 }
 
@@ -343,7 +394,7 @@ button, input {
   margin-top: 24px;
   border: 1px solid var(--color_black);
   border-radius: 14px;
-  background: #f5f5f7;
+  background: var(--color_light-grey);
   padding: 24px;
   text-align: center;
 }
@@ -400,7 +451,7 @@ button, input {
   aspect-ratio: 1 / 1;
   border: 1px solid var(--color_black);
   border-radius: 50%;
-  background: #f5f5f7;
+  background: var(--color_light-grey);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -437,6 +488,10 @@ button, input {
   display: flex;
 }
 
+/* =========================================================
+   APP PAGES: GOALS
+   ========================================================= */
+
 .goals_list {
   display: flex;
   flex-direction: column;
@@ -447,7 +502,7 @@ button, input {
   min-height: 82px;
   border: 1px solid var(--color_black);
   border-radius: 14px;
-  background: #f5f5f7;
+  background: var(--color_light-grey);
   padding: 16px 14px 16px 17px;
   display: grid;
   grid-template-columns: 1fr auto auto;
@@ -491,7 +546,7 @@ button, input {
   margin-top: 12px;
   border: 1px solid var(--color_black);
   border-radius: 14px;
-  background: #f5f5f7;
+  background: var(--color_light-grey);
   padding: 20px 16px 16px 16px;
   text-align: center;
 }
@@ -524,57 +579,11 @@ button, input {
   margin-top: 12px;
   text-align: center;
   min-height: 18px;
-  color: #c0392b;
+  color: var(--color_error);
 }
 
-.bottom_nav {
-  position: fixed;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: var(--page_width);
-  height: 74px;
-  border-top: 1px solid var(--color_black);
-  background: var(--color_white);
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  align-items: center;
-  z-index: 10;
-}
 
-.nav_link {
-  height: 100%;
-  color: #9aa4b2;
-  text-decoration: none;
-  font-size: 12px;
-  font-weight: 700;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-}
 
-.nav_icon {
-  font-size: 22px;
-  line-height: 22px;
-}
-
-.nav_link.is_active {
-  color: var(--color_black);
-  position: relative;
-}
-
-.nav_link.is_active::before {
-  content: "";
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: var(--color_accent-yellow);
-  z-index: -1;
-}
 
 @media (max-width: 392px) {
   .app_main {
