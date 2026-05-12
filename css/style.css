@@ -50,7 +50,7 @@ main {
   min-height: 100vh;
 }
 /* =========================================================
-   STYLE ELEMENTS - HEADINGS, BUTTONS, INPUT FIELDS
+   STYLE ELEMENTS - HEADINGS, BUTTONS, INPUT FIELDS, NAVIGATION
    ========================================================= */
 
 /*HEADINGS*/
@@ -148,7 +148,7 @@ button, input {
 }
 
 .form_input::placeholder {
-  color: #9ca3af;
+  color: var(--color_grey);
 }
 
 .form_input:focus {
@@ -174,7 +174,7 @@ button, input {
 
 .nav_link {
   height: 100%;
-  color: #9aa4b2;
+  color: var(--color_grey);
   text-decoration: none;
   font-size: 12px;
   font-weight: 700;
@@ -279,7 +279,7 @@ button, input {
 }
 
 /* =========================================================
-   APP PAGES: HOME
+    HOME PAGE
    ========================================================= */
 
 .app_body {
@@ -489,7 +489,7 @@ button, input {
 }
 
 /* =========================================================
-   APP PAGES: GOALS
+   GOALS PAGE
    ========================================================= */
 
 .goals_list {
@@ -582,9 +582,10 @@ button, input {
   color: var(--color_error);
 }
 
-
-
-
+/* =========================================================
+   RESPONSIVE DESIGN - Es Problem für säter
+   ========================================================= */
+   
 @media (max-width: 392px) {
   .app_main {
     padding-left: 16px;
