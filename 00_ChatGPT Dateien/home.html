@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home | Ready Set Dinner</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="app_body">
+  <main class="app_main">
+    <header class="page_header">
+      <h1>Ready Set Dinner</h1>
+      <p class="subtitle">Press the buzzer when dinner is ready!</p>
+    </header>
+
+    <section id="active_goal_area"></section>
+
+    <button id="start_round_btn" class="btn btn_primary call_button" type="button">
+      <span>🔔</span>
+      <span>Start Dinner Call</span>
+    </button>
+
+    <section id="timer_card" class="timer_card">
+      <div id="timer_display" class="timer_display">0:00.00</div>
+
+      <div class="progress_bar timer_bar">
+        <div id="timer_fill" class="progress_fill timer_fill"></div>
+      </div>
+
+      <button id="reset_timer_btn" class="btn btn_secondary timer_reset" type="button">
+        Reset
+      </button>
+    </section>
+
+    <section id="buzzer_panel" class="buzzer_panel">
+      <h2>Press Your Buzzer</h2>
+
+      <div class="buzzer_grid">
+        <button class="buzzer_button" type="button">
+          <span class="nav_icon">♙</span>
+          <span>Dad</span>
+        </button>
+        <button class="buzzer_button" type="button">
+          <span class="nav_icon">☻</span>
+          <span>Mom</span>
+        </button>
+        <button class="buzzer_button" type="button">
+          <span class="nav_icon">☺</span>
+          <span>Child 1</span>
+        </button>
+        <button class="buzzer_button" type="button">
+          <span class="nav_icon">♘</span>
+          <span>Child 2</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom_nav" aria-label="Main navigation">
+    <a class="nav_link is_active" href="home.html">
+      <span class="nav_icon">⌂</span>
+      <span>Home</span>
+    </a>
+    <a class="nav_link" href="goals.html">
+      <span class="nav_icon">◎</span>
+      <span>Goals</span>
+    </a>
+    <a class="nav_link" href="#">
+      <span class="nav_icon">♧</span>
+      <span>Family</span>
+    </a>
+    <a class="nav_link" href="#">
+      <span class="nav_icon">▥</span>
+      <span>Stats</span>
+    </a>
+  </nav>
+
+  <script src="js/auth.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>
