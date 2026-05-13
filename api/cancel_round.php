@@ -58,10 +58,9 @@ try {
     // Punkte vom aktiven Goal wieder abziehen
     if ($pointsToRemove > 0) {
         $goalStmt = $pdo->prepare("
-            UPDATE goal
-            SET points_current = GREATEST(points_current - :points_to_remove, 0)
-            WHERE Id_users = :user_id
-              AND is_active = 1
+            UPDATE users
+            SET points_balance = GREATEST(points_balance - :points_to_remove, 0)
+            WHERE id = :user_id
         ");
 
         $goalStmt->execute([
@@ -92,7 +91,6 @@ try {
         'round_id' => $roundId,
         'removed_points' => $pointsToRemove
     ]);
-
 } catch (Throwable $e) {
     if ($pdo->inTransaction()) {
         $pdo->rollBack();

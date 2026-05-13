@@ -175,18 +175,17 @@ try {
         ':placement' => $placement
     ]);
 
-    // Punkte zum aktiven Goal addieren
-    $goalStmt = $pdo->prepare("
-        UPDATE goal
-        SET points_current = points_current + :points
-        WHERE Id_users = :user_id
-          AND is_active = 1
-    ");
+    // Punkte zum Goal hinzufügen --> globales Punktekonto
+    $pointsStmt = $pdo->prepare("
+    UPDATE users
+    SET points_balance = points_balance + :points
+    WHERE id = :user_id
+");
 
-    $goalStmt->execute([
-        ':points' => $points,
-        ':user_id' => $userId
-    ]);
+$pointsStmt->execute([
+    ':points' => $points,
+    ':user_id' => $userId
+]);
 
     // Prüfen, ob alle erwarteten Members gedrückt haben
     $eventCountStmt = $pdo->prepare("
