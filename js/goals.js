@@ -140,7 +140,7 @@ function renderActiveGoal(goal) {
   activeGoalArea.innerHTML = `
     <section class="goal_card">
       <div class="goal_badge">
-        <span>🏆</span>
+        <img src="../resources/assets/icons/cup.svg" alt="cup icon">
         <span>Current Goal</span>
       </div>
 
