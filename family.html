@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/family.css">
+    <style> @import url('https://fonts.googleapis.com/css2?family=Geologica:wght,CRSV@100..900,0&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');</style>
+</head>
+
+<body>
+
+    <main class="family_page">
+
+        <header class="family_header">
+            <h1 class="family_title">Family </h1>
+            <p class="family_subtitle"> Add your family members and assign a buzzer color.</p>
+        </header>
+
+
+        <section id="family_members" class="family_members"></section>
+        <button id="add_member_button" class="btn_tertiary">+ Add Member</button>
+
+    </main>
+
+
+    <!-- popup -->
+
+    <div id="member_modal" class="member_modal is_hidden">
+
+        <div class="member_modal_card">
+            <div class="member_modal_header">
+                <h2>New Family Member</h2>
+            </div>
+
+            <form id="member_form">
+                <div class="form_group">
+                    <label for="member_name"> Name </label>
+                    <input id="member_name" type="text" maxlength="30" required>
+                </div>
+
+                <div class="form_group">
+                    <label>Select Icon</label>
+                    <div id="icon_selection" class="icon_selection"></div>
+                </div>
+
+                <div class="form_group">
+                    <label> Select Color</label>
+                    <div class="color_selection">
+                        <button type="button" class="color_button blue" data-color="blue"></button>
+                        <button type="button" class="color_button pink" data-color="pink"></button>
+                        <button type="button" class="color_button green" data-color="green"></button>
+                        <button type="button" class="color_button orange" data-color="orange"></button>
+                    </div>
+                </div>
+
+                <div class="member_modal_actions">
+                    <button type="button" id="cancel_member_button" class="button_secondary"> Cancel</button>
+                    <button type="submit" class="button_primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="bottom_nav_container"></div>
+
+    <script src="js/bottom-nav.js"></script>
+    <script src="js/family.js"></script>
+
+</body>
+
+</html>

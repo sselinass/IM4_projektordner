@@ -6,15 +6,17 @@ $userId = require_user_id();
 
 $stmt = $pdo->prepare("
     SELECT
-        ID,
-        goal,
-        points_required,
-        points_current,
-        is_active
-    FROM goal
-    WHERE Id_users = :user_id
-    ORDER BY is_active DESC, ID ASC
+        g.ID,
+        g.goal,
+        g.points_required,
+        u.points_balance AS points_current,
+        g.is_active
+    FROM goal g
+    INNER JOIN users u ON u.id = g.Id_users
+    WHERE g.Id_users = :user_id
+    ORDER BY g.is_active DESC, g.ID ASC
 ");
+
 $stmt->execute([':user_id' => $userId]);
 $goals = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
