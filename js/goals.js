@@ -136,7 +136,6 @@ function renderActiveGoal(goal) {
   const current = Number(goal.points_current);
   const required = Number(goal.points_required);
   const percentage = required > 0 ? Math.min((current / required) * 100, 100) : 0;
-
   activeGoalArea.innerHTML = `
     <section class="goal_card">
       <div class="goal_badge">
@@ -177,34 +176,33 @@ function renderFutureGoals(goals) {
   }
 
   futureGoalsList.innerHTML = goals.map(function (goal) {
-    const current = Number(goal.points_current);
-    const required = Number(goal.points_required);
+  const required = Number(goal.points_required);
 
-    return `
-      <article class="goal_list_item">
-        <div>
-          <h3>${escapeHtml(goal.goal)}</h3>
-          <p>${current} / ${required} points</p>
-        </div>
+  return `
+    <article class="goal_list_item">
+      <div>
+        <h3>${escapeHtml(goal.goal)}</h3>
+        <p>${required} points needed</p>
+      </div>
 
-        <button
-          class="icon_button"
-          type="button"
-          aria-label="Set active goal"
-          data-action="activate"
-          data-goal-id="${goal.ID}"
-        >○</button>
+      <button
+        class="icon_button"
+        type="button"
+        aria-label="Set active goal"
+        data-action="activate"
+        data-goal-id="${goal.ID}"
+      >○</button>
 
-        <button
-          class="icon_button"
-          type="button"
-          aria-label="Delete goal"
-          data-action="delete"
-          data-goal-id="${goal.ID}"
-        >⌫</button>
-      </article>
-    `;
-  }).join("");
+      <button
+        class="icon_button"
+        type="button"
+        aria-label="Delete goal"
+        data-action="delete"
+        data-goal-id="${goal.ID}"
+      >⌫</button>
+    </article>
+  `;
+}).join("");
 
   futureGoalsList.querySelectorAll("button[data-action]").forEach(function (button) {
     button.addEventListener("click", handleGoalAction);
