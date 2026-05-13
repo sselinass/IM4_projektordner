@@ -1,156 +1,138 @@
 <?php
 // api/create_family_member.php
 
-declare(strict_types=1);
+require_once '_init.php';
 
-require_once __DIR__ . "/_init.php";
-
-$user_id = require_user_id();
+$userId = require_user_id();
 
 $body = read_json_body();
 
-$name = trim($body["name"] ?? "");
-$icon = trim($body["icon"] ?? "");
-$buzzer = trim($body["buzzer"] ?? "");
+$name = trim($body['name'] ?? '');
+$icon = trim($body['icon'] ?? '');
+$buzzer = trim($body['buzzer'] ?? '');
 
-if (
-  $name === "" ||
-  $icon === "" ||
-  $buzzer === ""
-) {
-  json_response([
-    "success" => false,
-    "message" => "Missing fields."
-  ], 400);
+if ($name === '' || $icon === '' || $buzzer === '') {
+    json_response([
+        'status' => 'error',
+        'message' => 'Missing fields'
+    ], 400);
 }
 
-$allowed_colors = [
-  "blue",
-  "pink",
-  "green",
-  "orange"
+$allowedBuzzers = [
+    'blue',
+    'pink',
+    'green',
+    'orange'
 ];
 
-if (!in_array($buzzer, $allowed_colors, true)) {
-  json_response([
-    "success" => false,
-    "message" => "Invalid color."
-  ], 400);
+if (!in_array($buzzer, $allowedBuzzers, true)) {
+    json_response([
+        'status' => 'error',
+        'message' => 'Invalid buzzer'
+    ], 400);
 }
 
-$count_query = "
-  SELECT COUNT(*) AS total
-  FROM members
-  WHERE id_users = ?
-  AND is_active = 1
-";
+$allowedIcons = [
+    'character_baby',
+    'character_bird',
+    'character_bunny',
+    'character_cat',
+    'character_crown',
+    'character_fish',
+    'character_flower',
+    'character_heart',
+    'character_lightning',
+    'character_moon',
+    'character_person',
+    'character_personcircle',
+    'character_smiley',
+    'character_star',
+    'character_tree'
+];
 
-$count_statement = mysqli_prepare($db, $count_query);
-
-if (!$count_statement) {
-  json_response([
-    "success" => false,
-    "message" => "Prepare count failed",
-    "error" => mysqli_error($db)
-  ], 500);
+if (!in_array($icon, $allowedIcons, true)) {
+    json_response([
+        'status' => 'error',
+        'message' => 'Invalid icon'
+    ], 400);
 }
 
-mysqli_stmt_bind_param(
-  $count_statement,
-  "i",
-  $user_id
-);
+$countStmt = $pdo->prepare("
+    SELECT COUNT(*) AS total
+    FROM members
+    WHERE id_users = :user_id
+      AND is_active = 1
+");
 
-mysqli_stmt_execute($count_statement);
+$countStmt->execute([
+    ':user_id' => $userId
+]);
 
-$count_result = mysqli_stmt_get_result($count_statement);
+$total = (int) $countStmt->fetchColumn();
 
-$total = mysqli_fetch_assoc($count_result)["total"];
-
-if ((int) $total >= 4) {
-  json_response([
-    "success" => false,
-    "message" => "Maximum members reached."
-  ], 400);
+if ($total >= 4) {
+    json_response([
+        'status' => 'error',
+        'message' => 'Maximum members reached'
+    ], 400);
 }
 
-$color_query = "
-  SELECT ID
-  FROM members
-  WHERE id_users = ?
-  AND buzzer = ?
-  AND is_active = 1
-";
+$buzzerStmt = $pdo->prepare("
+    SELECT ID
+    FROM members
+    WHERE id_users = :user_id
+      AND buzzer = :buzzer
+      AND is_active = 1
+    LIMIT 1
+");
 
-$color_statement = mysqli_prepare($db, $color_query);
+$buzzerStmt->execute([
+    ':user_id' => $userId,
+    ':buzzer' => $buzzer
+]);
 
-if (!$color_statement) {
-  json_response([
-    "success" => false,
-    "message" => "Prepare color failed",
-    "error" => mysqli_error($db)
-  ], 500);
+$existingBuzzer = $buzzerStmt->fetch(PDO::FETCH_ASSOC);
+
+if ($existingBuzzer) {
+    json_response([
+        'status' => 'error',
+        'message' => 'Buzzer already assigned'
+    ], 400);
 }
 
-mysqli_stmt_bind_param(
-  $color_statement,
-  "is",
-  $user_id,
-  $buzzer
-);
+$insertStmt = $pdo->prepare("
+    INSERT INTO members (
+        name,
+        icon,
+        buzzer,
+        id_users,
+        is_active
+    )
+    VALUES (
+        :name,
+        :icon,
+        :buzzer,
+        :user_id,
+        1
+    )
+");
 
-mysqli_stmt_execute($color_statement);
-
-$color_result = mysqli_stmt_get_result($color_statement);
-
-if (mysqli_num_rows($color_result) > 0) {
-  json_response([
-    "success" => false,
-    "message" => "Color already assigned."
-  ], 400);
-}
-
-$insert_query = "
-  INSERT INTO members (
-    name,
-    icon,
-    buzzer,
-    id_users,
-    is_active
-  )
-  VALUES (?, ?, ?, ?, 1)
-";
-
-$insert_statement = mysqli_prepare($db, $insert_query);
-
-if (!$insert_statement) {
-  json_response([
-    "success" => false,
-    "message" => "Prepare insert failed",
-    "error" => mysqli_error($db)
-  ], 500);
-}
-
-mysqli_stmt_bind_param(
-  $insert_statement,
-  "sssi",
-  $name,
-  $icon,
-  $buzzer,
-  $user_id
-);
-
-$success = mysqli_stmt_execute($insert_statement);
-
-if (!$success) {
-  json_response([
-    "success" => false,
-    "message" => "Insert failed",
-    "error" => mysqli_error($db)
-  ], 500);
-}
+$insertStmt->execute([
+    ':name' => $name,
+    ':icon' => $icon,
+    ':buzzer' => $buzzer,
+    ':user_id' => $userId
+]);
 
 json_response([
-  "success" => true,
-  "message" => "Family member created."
+    'status' => 'success',
+    'message' => 'Family member created',
+    'member' => [
+        'ID' => (int) $pdo->lastInsertId(),
+        'name' => $name,
+        'icon' => $icon,
+        'buzzer' => $buzzer,
+        'id_users' => $userId,
+        'is_active' => 1
+    ]
 ]);

@@ -1,51 +1,31 @@
 <?php
 // api/get_family_members.php
 
-declare(strict_types=1);
+require_once '_init.php';
 
-require_once __DIR__ . "/_init.php";
+$userId = require_user_id();
 
-$user_id = require_user_id();
+$stmt = $pdo->prepare("
+    SELECT
+        ID,
+        name,
+        icon,
+        buzzer,
+        id_users,
+        is_active
+    FROM members
+    WHERE id_users = :user_id
+      AND is_active = 1
+    ORDER BY ID ASC
+");
 
-$query = "
-  SELECT
-    ID,
-    name,
-    icon,
-    buzzer
-  FROM members
-  WHERE id_users = ?
-  AND is_active = 1
-  ORDER BY ID ASC
-";
+$stmt->execute([
+    ':user_id' => $userId
+]);
 
-$statement = mysqli_prepare($db, $query);
-
-if (!$statement) {
-  json_response([
-    "success" => false,
-    "message" => "Prepare failed",
-    "error" => mysqli_error($db)
-  ], 500);
-}
-
-mysqli_stmt_bind_param(
-  $statement,
-  "i",
-  $user_id
-);
-
-mysqli_stmt_execute($statement);
-
-$result = mysqli_stmt_get_result($statement);
-
-$members = [];
-
-while ($member = mysqli_fetch_assoc($result)) {
-  $members[] = $member;
-}
+$members = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 json_response([
-  "success" => true,
-  "members" => $members
+    'status' => 'success',
+    'members' => $members
 ]);

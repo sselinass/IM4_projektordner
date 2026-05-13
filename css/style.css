@@ -671,17 +671,31 @@ button, input {
   gap: 16px;
 }
 
-
 .family_member_card {
   background: var(--color_white);
   border: 1px solid var(--color_grey);
-  border-radius: 28px;
+  border-radius: 16px;
   padding: 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
+.family_member_card.blue {
+  background: #c8f4ff;
+}
+
+.family_member_card.pink {
+  background: #efb8ff;
+}
+
+.family_member_card.green {
+  background: #dcffad;
+}
+
+.family_member_card.orange {
+  background: #ffdfbf;
+}
 
 .family_member_left {
   display: flex;
@@ -689,12 +703,32 @@ button, input {
   gap: 14px;
 }
 
+.member_actions {
+  display: flex;
+  gap: 8px;
+}
+
+.member_action_button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--color_black);
+  border-radius: 50%;
+  background: var(--color_white);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.member_action_button.delete {
+  color: #d60000;
+}
+
 
 .member_icon_wrapper {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: var(--color_light-grey);
+  border: 1px solid var(--color_black);
+  background: var(--color_white);
   display: flex;
   align-items: center;
   justify-content: center;

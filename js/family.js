@@ -18,10 +18,10 @@ const icons = [
   "character_tree"
 ];
 
+let editing_member_id = null;
 let selected_icon = null;
 let selected_color = null;
 let family_members = [];
-
 
 const family_members_container =
   document.getElementById("family_members");
@@ -43,17 +43,13 @@ const icon_selection =
 
 
 async function initFamilyPage() {
-
   createIconSelection();
-
-  await loadFamilyMembers();
-
   setupEventListeners();
+  await loadFamilyMembers();
 }
 
 
 function setupEventListeners() {
-
   add_member_button.addEventListener(
     "click",
     openModal
@@ -72,14 +68,10 @@ function setupEventListeners() {
 
 
 function createIconSelection() {
-
   icons.forEach(icon => {
-
-    const button =
-      document.createElement("button");
+    const button = document.createElement("button");
 
     button.type = "button";
-
     button.className = "icon_button";
 
     button.innerHTML = `
@@ -89,7 +81,6 @@ function createIconSelection() {
     `;
 
     button.addEventListener("click", () => {
-
       document
         .querySelectorAll(".icon_button")
         .forEach(button => {
@@ -97,7 +88,6 @@ function createIconSelection() {
         });
 
       button.classList.add("is_selected");
-
       selected_icon = icon;
     });
 
@@ -108,9 +98,7 @@ function createIconSelection() {
   document
     .querySelectorAll(".color_button")
     .forEach(button => {
-
       button.addEventListener("click", () => {
-
         if (button.disabled) return;
 
         document
@@ -120,130 +108,232 @@ function createIconSelection() {
           });
 
         button.classList.add("is_selected");
-
-        selected_color =
-          button.dataset.color;
+        selected_color = button.dataset.color;
       });
     });
 }
 
 
 async function loadFamilyMembers() {
-
   try {
-
     const response =
-      await fetch(
-        "api/get_family_members.php"
-      );
+      await fetch("api/get_family_members.php");
+
+    const result =
+      await response.json();
+
+    console.log("Family members response:", result);
+
+    if (result.status !== "success") {
+      console.error(result.message);
+      return;
+    }
 
     family_members =
-      await response.json();
+      result.members || [];
 
     renderFamilyMembers();
 
   } catch (error) {
-
-    console.error(error);
+    console.error("Could not load family members:", error);
   }
 }
 
 
 function renderFamilyMembers() {
-
   family_members_container.innerHTML = "";
 
   family_members.forEach(member => {
+    const card = document.createElement("article");
 
-    family_members_container.innerHTML += `
-      <article class="family_member_card">
+    card.className =
+      `family_member_card ${member.buzzer}`;
 
-        <div class="family_member_left">
+    card.innerHTML = `
+      <div class="family_member_left">
 
-          <div class="member_icon_wrapper">
-
-            <img
-              class="member_icon"
-              src="resources/assets/icons/${member.icon}.svg"
-              alt="${member.name}">
-
-          </div>
-
-          <div>
-
-            <div class="member_name">
-              ${member.name}
-            </div>
-
-            <div class="member_points">
-              0 total points
-            </div>
-
-          </div>
-
+        <div class="member_icon_wrapper">
+          <img
+            class="member_icon"
+            src="resources/assets/icons/${member.icon}.svg"
+            alt="${member.name}">
         </div>
 
-        <div
-          class="member_color ${member.buzzer}">
+        <div>
+          <div class="member_name">
+            ${member.name}
+          </div>
+
+          <div class="member_points">
+            0 total points
+          </div>
         </div>
 
-      </article>
+      </div>
+
+      <div class="member_actions">
+
+        <button
+          class="member_action_button edit"
+          data-id="${member.ID}">
+        <img src="../resources/assets/icons/pen.svg" alt="edit">
+        </button>
+
+        <button
+          class="member_action_button delete"
+          data-id="${member.ID}">
+          <img src="../resources/assets/icons/bin.svg" alt="Delete">
+        </button>
+
+      </div>
     `;
+
+    family_members_container.appendChild(card);
   });
 
+  setupMemberActionButtons();
 
   updateAddButton();
 }
 
+//ACTION BUTTONS (EDIT/DELETE) 
+function setupMemberActionButtons() {
 
-function updateAddButton() {
+  document
+    .querySelectorAll(".member_action_button.delete")
+    .forEach(button => {
+      button.addEventListener("click", async () => {
+        const memberId = button.dataset.id;
 
-  if (family_members.length >= 4) {
+        await deleteFamilyMember(memberId);
+      });
+    });
 
-    add_member_button.style.display = "none";
 
-  } else {
+  document
+  .querySelectorAll(".member_action_button.edit")
+  .forEach(button => {
+    button.addEventListener("click", () => {
+      const memberId = Number(button.dataset.id);
 
-    add_member_button.style.display = "block";
+      const member =
+        family_members.find(member => Number(member.ID) === memberId);
+
+      if (!member) return;
+
+      openModal(member);
+    });
+  });
+}
+
+async function deleteFamilyMember(memberId) {
+
+  const confirmed =
+    confirm("Do you really want to delete this family member?");
+
+  if (!confirmed) return;
+
+  const response =
+    await fetch("api/delete_family_member.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: memberId
+      })
+    });
+
+  const result =
+    await response.json();
+
+  if (result.status !== "success") {
+    alert(result.message);
+    return;
   }
 
+  await loadFamilyMembers();
+}
+
+
+
+function updateAddButton() {
+  if (family_members.length >= 4) {
+    add_member_button.style.display = "none";
+  } else {
+    add_member_button.style.display = "block";
+  }
 
   disableUsedColors();
 }
 
 
-function disableUsedColors() {
-
+function disableUsedColors(currentColor = null) {
   const used_colors =
     family_members.map(member => member.buzzer);
 
   document
     .querySelectorAll(".color_button")
     .forEach(button => {
-
-      const color =
-        button.dataset.color;
+      const color = button.dataset.color;
 
       button.disabled =
-        used_colors.includes(color);
+        used_colors.includes(color) &&
+        color !== currentColor;
     });
 }
 
 
-function openModal() {
+function openModal(member = null) {
+  disableUsedColors(member?.buzzer || null);
 
   member_modal.classList.remove("is_hidden");
+
+  if (member) {
+    editing_member_id = member.ID;
+
+    document.querySelector(".member_modal_header h2").textContent =
+      "Edit Family Member";
+
+    document.getElementById("member_name").value =
+      member.name;
+
+    selected_icon = member.icon;
+    selected_color = member.buzzer;
+
+    document
+      .querySelectorAll(".icon_button")
+      .forEach(button => {
+        const img = button.querySelector("img");
+        const isSelected =
+          img.src.includes(`${member.icon}.svg`);
+
+        button.classList.toggle("is_selected", isSelected);
+      });
+
+    document
+      .querySelectorAll(".color_button")
+      .forEach(button => {
+        button.classList.toggle(
+          "is_selected",
+          button.dataset.color === member.buzzer
+        );
+      });
+
+  } else {
+    editing_member_id = null;
+
+    document.querySelector(".member_modal_header h2").textContent =
+      "New Family Member";
+  }
 }
 
-
 function closeModal() {
-
   member_modal.classList.add("is_hidden");
 
   member_form.reset();
 
   selected_icon = null;
-
   selected_color = null;
 
   document
@@ -257,50 +347,66 @@ function closeModal() {
     .forEach(button => {
       button.classList.remove("is_selected");
     });
+
+    editing_member_id = null;
+    document.querySelector(".member_modal_header h2").textContent = "New Family Member";
 }
 
 
 async function saveFamilyMember(event) {
-
   event.preventDefault();
 
   const name =
-    document.getElementById("member_name").value;
+    document.getElementById("member_name").value.trim();
 
-  if (!selected_icon || !selected_color) {
-
-    alert("Please select icon and color.");
-
+  if (name === "") {
+    alert("Please enter a name.");
     return;
   }
 
-  try {
+  if (!selected_icon || !selected_color) {
+    alert("Please select icon and color.");
+    return;
+  }
 
-    const response =
-      await fetch(
-        "api/create_family_member.php",
-        {
-          method: "POST",
+  const url =
+    editing_member_id
+      ? "api/update_family_member.php"
+      : "api/create_family_member.php";
 
-          headers: {
-            "Content-Type": "application/json"
-          },
-
-          body: JSON.stringify({
-            name,
-            icon: selected_icon,
-            buzzer: selected_color
-          })
+  const payload =
+    editing_member_id
+      ? {
+          id: editing_member_id,
+          name: name,
+          icon: selected_icon,
+          buzzer: selected_color
         }
-      );
+      : {
+          name: name,
+          icon: selected_icon,
+          buzzer: selected_color
+        };
+
+  try {
+    const response =
+      await fetch(url, {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(payload)
+      });
 
     const result =
       await response.json();
 
-    if (!result.success) {
+    console.log("Save family member response:", result);
 
+    if (result.status !== "success") {
       alert(result.message);
-
       return;
     }
 
@@ -309,8 +415,7 @@ async function saveFamilyMember(event) {
     await loadFamilyMembers();
 
   } catch (error) {
-
-    console.error(error);
+    console.error("Could not save family member:", error);
   }
 }
 

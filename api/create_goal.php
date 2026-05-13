@@ -45,10 +45,10 @@ try {
     $isActive = $hasActiveGoal ? 0 : 1;
 
     $insert = $pdo->prepare("
-        INSERT INTO goal
-            (goal, points_required, points_current, is_active, Id_users)
-        VALUES
-            (:goal, :points_required, 0, :is_active, :user_id)
+    INSERT INTO goal
+        (goal, points_required, is_active, Id_users)
+    VALUES
+        (:goal, :points_required, :is_active, :user_id)
     ");
     $insert->execute([
         ':goal' => $title,
