@@ -8,6 +8,7 @@ const timerDisplay = document.getElementById("timer_display");
 const timerFill = document.getElementById("timer_fill");
 const resetTimerBtn = document.getElementById("reset_timer_btn");
 const buzzerPanel = document.getElementById("buzzer_panel");
+const buzzerGrid = document.getElementById("buzzer_grid");
 
 document.addEventListener("DOMContentLoaded", async function () {
   const user = await requireAuth();
@@ -17,6 +18,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   await loadActiveGoal();
+  await loadMembers();
 });
 
 function renderGoalCard(goal) {
@@ -76,6 +78,122 @@ async function loadActiveGoal() {
   }
 }
 
+async function loadMembers() {
+  try {
+    const response = await fetch("api/get_members.php", {
+      credentials: "include"
+    });
+
+    const result = await response.json();
+
+    if (result.status !== "success") {
+      buzzerGrid.innerHTML = `<p>Family Members konnten nicht geladen werden.</p>`;
+      return;
+    }
+
+    renderMemberButtons(result.members);
+  } catch (error) {
+    console.error(error);
+    buzzerGrid.innerHTML = `<p>Verbindung zum Server fehlgeschlagen.</p>`;
+  }
+}
+
+function renderMemberButtons(members) {
+  if (!members || members.length === 0) {
+    buzzerGrid.innerHTML = `<p>No active family members found.</p>`;
+    return;
+  }
+
+  buzzerGrid.innerHTML = members.map(function (member) {
+    return `
+      <button
+  class="buzzer_button"
+  type="button"
+  data-member-id="${member.ID}"
+  data-clicked="0"
+  disabled
+>
+        <span class="nav_icon">${escapeHtml(member.icon || "●")}</span>
+        <span>${escapeHtml(member.name)}</span>
+      </button>
+    `;
+  }).join("");
+
+  buzzerGrid.querySelectorAll(".buzzer_button").forEach(function (button) {
+    button.addEventListener("click", handleBuzzerClick);
+  });
+}
+
+async function handleBuzzerClick(event) {
+  const button = event.currentTarget;
+  const memberId = Number(button.dataset.memberId);
+
+  if (!memberId) {
+    return;
+  }
+
+  button.disabled = true;
+
+  try {
+    const response = await fetch("api/create_buzzer_event.php", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        member_id: memberId
+      })
+    });
+
+    const result = await response.json();
+
+    if (result.status !== "success") {
+      alert(result.message || "Buzzer konnte nicht gespeichert werden.");
+      button.disabled = false;
+      return;
+    }
+
+    button.dataset.clicked = "1";
+button.classList.add("is_clicked");
+
+button.innerHTML += `
+  <small class="buzzer_result">${result.event.points} points</small>
+`;
+
+    await loadActiveGoal();
+
+    if (result.round_completed) {
+      stopTimer();
+    }
+
+  } catch (error) {
+    console.error(error);
+    alert("Buzzer konnte nicht gespeichert werden.");
+    button.disabled = false;
+  }
+}
+
+function setBuzzerButtonsEnabled(isEnabled) {
+  buzzerGrid.querySelectorAll(".buzzer_button").forEach(function (button) {
+    if (button.dataset.clicked !== "1") {
+      button.disabled = !isEnabled;
+    }
+  });
+}
+
+function resetBuzzerButtonStates() {
+  buzzerGrid.querySelectorAll(".buzzer_button").forEach(function (button) {
+    button.dataset.clicked = "0";
+    button.disabled = false;
+    button.classList.remove("is_clicked");
+
+    button.querySelectorAll(".buzzer_result").forEach(function (resultElement) {
+      resultElement.remove();
+    });
+  });
+}
+
 startRoundBtn.addEventListener("click", async function () {
   try {
     const response = await fetch("api/start_round.php", {
@@ -83,12 +201,24 @@ startRoundBtn.addEventListener("click", async function () {
       credentials: "include"
     });
 
-    const result = await response.json();
+    const raw = await response.text();
+console.log("Antwort von start_round.php:", raw);
+
+let result;
+
+try {
+  result = JSON.parse(raw);
+} catch (error) {
+  alert("start_round.php liefert kein gültiges JSON. Siehe Console.");
+  console.error("Keine JSON-Antwort:", raw);
+  return;
+}
 
     if (result.status === "success") {
-      startTimer(new Date(result.round.starttime.replace(" ", "T")).getTime());
-      return;
-    }
+  resetBuzzerButtonStates();
+  startTimer(new Date(result.round.starttime.replace(" ", "T")).getTime());
+  return;
+}
 
     if (result.active_round) {
       startTimer(Date.now() - result.active_round.seconds_elapsed * 1000);
@@ -134,6 +264,8 @@ function startTimer(startTimestamp) {
 
   clearInterval(timerInterval);
   timerInterval = setInterval(updateTimer, 50);
+
+  setBuzzerButtonsEnabled(true);
 }
 
 function stopTimer() {
@@ -146,6 +278,8 @@ function stopTimer() {
   timerCard.classList.remove("is_visible");
   buzzerPanel.classList.remove("is_visible");
   startRoundBtn.style.display = "flex";
+
+  setBuzzerButtonsEnabled(false);
 }
 
 function updateTimer() {
@@ -162,8 +296,8 @@ function updateTimer() {
   timerFill.style.width = `${progress}%`;
 
   if (elapsedSeconds >= 300) {
-    clearInterval(timerInterval);
-  }
+  stopTimer();
+}
 }
 
 function formatTimer(milliseconds) {
