@@ -102,8 +102,26 @@ startRoundBtn.addEventListener("click", async function () {
   }
 });
 
-resetTimerBtn.addEventListener("click", function () {
-  stopTimer();
+resetTimerBtn.addEventListener("click", async function () {
+  try {
+    const response = await fetch("api/cancel_round.php", {
+      method: "POST",
+      credentials: "include"
+    });
+
+    const result = await response.json();
+
+    if (result.status !== "success") {
+      alert(result.message || "Runde konnte nicht zurückgesetzt werden.");
+      return;
+    }
+
+    stopTimer();
+
+  } catch (error) {
+    console.error(error);
+    alert("Reset fehlgeschlagen.");
+  }
 });
 
 function startTimer(startTimestamp) {

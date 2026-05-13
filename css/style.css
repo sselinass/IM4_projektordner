@@ -175,6 +175,7 @@ button, input {
 .nav_link {
   height: 100%;
   color: var(--color_grey);
+  opacity: 50%;
   text-decoration: none;
   font-size: 12px;
   font-weight: 700;
@@ -185,14 +186,17 @@ button, input {
   gap: 3px;
 }
 
-.nav_icon {
-  font-size: 22px;
-  line-height: 22px;
+.nav_link img {
+    opacity: 0.45;
 }
 
 .nav_link.is_active {
   color: var(--color_black);
   position: relative;
+}
+
+.nav_link.is_active img {
+  opacity: 1;
 }
 
 .nav_link.is_active::before {
