@@ -113,7 +113,7 @@ function renderMemberButtons(members) {
   data-clicked="0"
   disabled
 >
-        <span class="nav_icon">${escapeHtml(member.icon || "●")}</span>
+        <img class="member_icon" src="resources/assets/icons/${member.icon}.svg" alt="${member.name}">
         <span>${escapeHtml(member.name)}</span>
       </button>
     `;

@@ -497,6 +497,7 @@ button, input {
 
 .buzzer_button:disabled {
   cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .buzzer_button.is_clicked {
@@ -509,6 +510,7 @@ button, input {
   font-size: 14px;
   font-weight: 700;
 }
+
 
 .goal_actions {
   margin-top: 18px;
@@ -738,6 +740,8 @@ button, input {
   width: 34px;
   height: 34px;
 }
+
+
 
 .member_name {
   font-size: 18px;
