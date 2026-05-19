@@ -122,8 +122,6 @@ async function loadFamilyMembers() {
     const result =
       await response.json();
 
-    console.log("Family members response:", result);
-
     if (result.status !== "success") {
       console.error(result.message);
       return;
@@ -164,8 +162,8 @@ function renderFamilyMembers() {
             ${member.name}
           </div>
 
-          <div class="member_points">
-            0 total points
+          <div class="member_points" title="${Number(member.total_points || 0)} total points">
+            ${formatPoints(member.total_points)} total points
           </div>
         </div>
 
@@ -211,19 +209,19 @@ function setupMemberActionButtons() {
 
 
   document
-  .querySelectorAll(".member_action_button.edit")
-  .forEach(button => {
-    button.addEventListener("click", () => {
-      const memberId = Number(button.dataset.id);
+    .querySelectorAll(".member_action_button.edit")
+    .forEach(button => {
+      button.addEventListener("click", () => {
+        const memberId = Number(button.dataset.id);
 
-      const member =
-        family_members.find(member => Number(member.ID) === memberId);
+        const member =
+          family_members.find(member => Number(member.ID) === memberId);
 
-      if (!member) return;
+        if (!member) return;
 
-      openModal(member);
+        openModal(member);
+      });
     });
-  });
 }
 
 async function deleteFamilyMember(memberId) {
@@ -348,8 +346,8 @@ function closeModal() {
       button.classList.remove("is_selected");
     });
 
-    editing_member_id = null;
-    document.querySelector(".member_modal_header h2").textContent = "New Family Member";
+  editing_member_id = null;
+  document.querySelector(".member_modal_header h2").textContent = "New Family Member";
 }
 
 
@@ -377,16 +375,16 @@ async function saveFamilyMember(event) {
   const payload =
     editing_member_id
       ? {
-          id: editing_member_id,
-          name: name,
-          icon: selected_icon,
-          buzzer: selected_color
-        }
+        id: editing_member_id,
+        name: name,
+        icon: selected_icon,
+        buzzer: selected_color
+      }
       : {
-          name: name,
-          icon: selected_icon,
-          buzzer: selected_color
-        };
+        name: name,
+        icon: selected_icon,
+        buzzer: selected_color
+      };
 
   try {
     const response =
@@ -403,8 +401,6 @@ async function saveFamilyMember(event) {
     const result =
       await response.json();
 
-    console.log("Save family member response:", result);
-
     if (result.status !== "success") {
       alert(result.message);
       return;
@@ -419,5 +415,24 @@ async function saveFamilyMember(event) {
   }
 }
 
+function formatPoints(points) {
+  const value = Number(points || 0);
+
+  if (value < 1000) {
+    return String(value);
+  }
+
+  if (value < 10000) {
+    const shortValue = value / 1000;
+
+    if (Number.isInteger(shortValue)) {
+      return `${shortValue}k`;
+    }
+
+    return `${shortValue.toFixed(1)}k`;
+  }
+
+  return `${Math.round(value / 1000)}k`;
+}
 
 initFamilyPage();

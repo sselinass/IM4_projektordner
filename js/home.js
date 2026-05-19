@@ -1,5 +1,7 @@
 let timerInterval = null;
 let timerStartedAt = null;
+let roundStateInterval = null;
+let isSyncingRoundState = false;
 
 const activeGoalArea = document.getElementById("active_goal_area");
 const startRoundBtn = document.getElementById("start_round_btn");
@@ -19,6 +21,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   await loadActiveGoal();
   await loadMembers();
+  await syncRoundState();
+
+  roundStateInterval = setInterval(syncRoundState, 1000);
 });
 
 function renderGoalCard(goal) {
@@ -105,15 +110,21 @@ function renderMemberButtons(members) {
   }
 
   buzzerGrid.innerHTML = members.map(function (member) {
+    const buzzerColor = escapeHtml(member.buzzer);
+
     return `
       <button
-  class="buzzer_button"
-  type="button"
-  data-member-id="${member.ID}"
-  data-clicked="0"
-  disabled
->
-        <img class="member_icon" src="resources/assets/icons/${member.icon}.svg" alt="${member.name}">
+        class="buzzer_button ${buzzerColor}"
+        type="button"
+        data-member-id="${member.ID}"
+        data-clicked="0"
+        disabled
+      >
+        <img
+          class="member_icon"
+          src="resources/assets/icons/${member.icon}.svg"
+          alt="${escapeHtml(member.name)}"
+        >
         <span>${escapeHtml(member.name)}</span>
       </button>
     `;
@@ -155,9 +166,9 @@ async function handleBuzzerClick(event) {
     }
 
     button.dataset.clicked = "1";
-button.classList.add("is_clicked");
+    button.classList.add("is_clicked");
 
-button.innerHTML += `
+    button.innerHTML += `
   <small class="buzzer_result">${result.event.points} points</small>
 `;
 
@@ -202,23 +213,23 @@ startRoundBtn.addEventListener("click", async function () {
     });
 
     const raw = await response.text();
-console.log("Antwort von start_round.php:", raw);
+    console.log("Antwort von start_round.php:", raw);
 
-let result;
+    let result;
 
-try {
-  result = JSON.parse(raw);
-} catch (error) {
-  alert("start_round.php liefert kein gültiges JSON. Siehe Console.");
-  console.error("Keine JSON-Antwort:", raw);
-  return;
-}
+    try {
+      result = JSON.parse(raw);
+    } catch (error) {
+      alert("start_round.php liefert kein gültiges JSON. Siehe Console.");
+      console.error("Keine JSON-Antwort:", raw);
+      return;
+    }
 
     if (result.status === "success") {
-  resetBuzzerButtonStates();
-  startTimer(new Date(result.round.starttime.replace(" ", "T")).getTime());
-  return;
-}
+      resetBuzzerButtonStates();
+      startTimer(new Date(result.round.starttime.replace(" ", "T")).getTime());
+      return;
+    }
 
     if (result.active_round) {
       startTimer(Date.now() - result.active_round.seconds_elapsed * 1000);
@@ -296,8 +307,8 @@ function updateTimer() {
   timerFill.style.width = `${progress}%`;
 
   if (elapsedSeconds >= 300) {
-  stopTimer();
-}
+    stopTimer();
+  }
 }
 
 function formatTimer(milliseconds) {
@@ -317,4 +328,73 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+async function syncRoundState() {
+  if (isSyncingRoundState) {
+    return;
+  }
+
+  isSyncingRoundState = true;
+
+  try {
+    const response = await fetch("api/get_round_state.php", {
+      credentials: "include"
+    });
+
+    const result = await response.json();
+
+    if (result.status !== "success") {
+      return;
+    }
+
+    if (!result.active_round) {
+      if (timerStartedAt) {
+        stopTimer();
+        await loadActiveGoal();
+      }
+
+      return;
+    }
+
+    const startTimestamp = new Date(
+      result.active_round.starttime.replace(" ", "T")
+    ).getTime();
+
+    if (!timerStartedAt) {
+      resetBuzzerButtonStates();
+      startTimer(startTimestamp);
+    }
+
+    applyRoundEvents(result.events || []);
+
+  } catch (error) {
+    console.error("Round state sync failed:", error);
+  } finally {
+    isSyncingRoundState = false;
+  }
+}
+
+function applyRoundEvents(events) {
+  events.forEach(function (event) {
+    const button = buzzerGrid.querySelector(
+      `.buzzer_button[data-member-id="${event.member_id}"]`
+    );
+
+    if (!button) {
+      return;
+    }
+
+    button.dataset.clicked = "1";
+    button.disabled = true;
+    button.classList.add("is_clicked");
+
+    const existingResult = button.querySelector(".buzzer_result");
+
+    if (!existingResult) {
+      button.innerHTML += `
+        <small class="buzzer_result">${event.points} points</small>
+      `;
+    }
+  });
 }

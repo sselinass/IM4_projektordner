@@ -1,26 +1,99 @@
 <?php
-/*******
- * Kapitel 12: Website2DB > Schritt 2: Website -> DB
- * load.php
- * Daten als JSON-String vom ESP empfangen und in die Datenbank einfügen
- ******/
+// api/load.php
 
-require_once("../system/config.php");
+require_once '_init.php';
+require_once '_game_logic.php';
 
-$inputJSON = file_get_contents('php://input');
-$input = json_decode($inputJSON, true);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    json_response([
+        'status' => 'error',
+        'message' => 'Invalid request method'
+    ], 405);
+}
 
-$buzzer_events = $input["buzzer_events"];
-$timestamp = $input["timestamp"];
-$id_users = $input["id_users"];
+$data = read_json_body();
 
-$sql = "INSERT INTO NEU_buzzer_events (buzzer_events, timestamp, id_users) VALUES (?, ?, ?)";
+$eventCode = game_normalize_event_code((string) ($data['buzzer_events'] ?? ''));
+$userId = (int) ($data['id_users'] ?? $data['Id_users'] ?? 0);
+$eventTimeRaw = (string) ($data['timestamp'] ?? '');
 
-$stmt = $pdo->prepare($sql);
-$stmt->execute([
-    $buzzer_events,
-    $timestamp,
-    $id_users
-]);
+if ($eventCode === '') {
+    json_response([
+        'status' => 'error',
+        'message' => 'Event-Code fehlt.'
+    ], 422);
+}
 
-?>
+if ($userId <= 0) {
+    json_response([
+        'status' => 'error',
+        'message' => 'User-ID fehlt.'
+    ], 422);
+}
+
+try {
+    $eventTime = game_parse_event_time($eventTimeRaw);
+
+    $pdo->beginTransaction();
+
+    $inputEventId = game_log_input_event(
+        $pdo,
+        $eventCode,
+        $eventTime,
+        $userId,
+        'esp'
+    );
+
+    $result = [
+        'input_event_id' => $inputEventId
+    ];
+
+    if ($eventCode === 'Start') {
+        $round = game_start_round($pdo, $userId, $eventTime);
+        $result['action'] = 'round_started';
+        $result['round'] = $round;
+    } elseif ($eventCode === 'End') {
+        $endResult = game_end_round($pdo, $userId, $eventTime);
+        $result['action'] = 'round_ended';
+        $result = array_merge($result, $endResult);
+    } else {
+        $event = game_create_buzzer_event_from_code(
+            $pdo,
+            $userId,
+            $eventCode,
+            $eventTime
+        );
+
+        $result['action'] = 'buzzer_saved';
+        $result['event'] = $event;
+        $result['round_completed'] = $event['round_completed'];
+    }
+
+    $pdo->commit();
+
+    json_response([
+        'status' => 'success',
+        'result' => $result
+    ]);
+
+} catch (GameException $e) {
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+
+    json_response([
+        'status' => 'error',
+        'message' => $e->getMessage()
+    ], $e->statusCode);
+
+} catch (Throwable $e) {
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+
+    json_response([
+        'status' => 'error',
+        'message' => 'Physical-Computing-Event konnte nicht verarbeitet werden.',
+        'debug' => $e->getMessage()
+    ], 500);
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statistics | Ready Set Dinner</title>
+  <link rel="icon" type="image/png" href="resources/assets/icons/bell.svg">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Geologica:wght,CRSV@100..900,0&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+  </style>
+</head>
+
+<body class="app_body">
+
+  <main class="app_main stats_page">
+
+    <header class="page_header stats_header">
+      <h1>Statistics</h1>
+      <p class="subtitle">Track your family's performance</p>
+    </header>
+
+    <section class="stats_card">
+      <h2>This Week's Points</h2>
+
+      <div id="stats_members_list" class="stats_members_list">
+        <p>Loading statistics...</p>
+      </div>
+
+      <button id="stats_toggle_button" class="btn btn_primary stats_toggle_button" type="button">
+        Show Average
+      </button>
+    </section>
+
+    <section class="stats_card stats_chart_card">
+      <h2>Weekly Trends</h2>
+      <p class="stats_chart_subtitle">(Last 3 Weeks)</p>
+
+      <div id="weekly_chart" class="weekly_chart">
+        <p>Loading chart...</p>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="bottom_nav_container"></div>
+
+  <script src="js/bottom-nav.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/stats.js"></script>
+
+</body>
+</html>

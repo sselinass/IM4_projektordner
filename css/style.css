@@ -479,19 +479,19 @@ button, input {
   font-weight: 800;
 }
 
-.buzzer_button:nth-child(1) {
+.buzzer_button.blue {
   background: var(--color_accent-blue);
 }
 
-.buzzer_button:nth-child(2) {
+.buzzer_button.pink {
   background: var(--color_accent-pink);
 }
 
-.buzzer_button:nth-child(3) {
+.buzzer_button.green {
   background: var(--color_accent-green);
 }
 
-.buzzer_button:nth-child(4) {
+.buzzer_button.orange {
   background: var(--color_accent-orange);
 }
 
@@ -930,3 +930,216 @@ button, input {
   color: white;
 }
 
+/* =========================================================
+   STATS PAGE
+   ========================================================= */
+
+.stats_page {
+  padding-bottom: 110px;
+}
+
+.stats_header {
+  margin-bottom: 48px;
+}
+
+.stats_card {
+  width: 100%;
+  border: 1px solid var(--color_black);
+  border-radius: 16px;
+  background: var(--color_white);
+  padding: 26px 24px 24px 24px;
+  margin-bottom: 24px;
+}
+
+.stats_card h2 {
+  margin-bottom: 24px;
+}
+
+.stats_members_list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.stats_member_card {
+  min-height: 88px;
+  border: 1px solid var(--color_black);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stats_member_card.blue {
+  background: var(--color_accent-blue);
+}
+
+.stats_member_card.pink {
+  background: var(--color_accent-pink);
+}
+
+.stats_member_card.green {
+  background: var(--color_accent-green);
+}
+
+.stats_member_card.orange {
+  background: var(--color_accent-orange);
+}
+
+.stats_member_left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.stats_icon_wrapper {
+  width: 54px;
+  height: 54px;
+  border: 1px solid var(--color_black);
+  border-radius: 50%;
+  background: var(--color_white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stats_icon_wrapper img {
+  width: 30px;
+  height: 30px;
+}
+
+.stats_member_card h3 {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 800;
+}
+
+.stats_member_card p {
+  margin-top: 3px;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color_black);
+  opacity: 0.75;
+}
+
+.stats_points {
+  text-align: right;
+}
+
+.stats_points strong {
+  display: block;
+  font-size: 28px;
+  line-height: 30px;
+  font-weight: 800;
+}
+
+.stats_points span {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  line-height: 14px;
+  color: var(--color_black);
+  opacity: 0.7;
+}
+
+.stats_toggle_button {
+  width: 148px;
+  height: 45px;
+  margin: 20px auto 0 auto;
+  font-size: 14px;
+}
+
+.stats_chart_card {
+  padding-bottom: 26px;
+}
+
+.stats_chart_card h2 {
+  margin-bottom: 3px;
+}
+
+.stats_chart_subtitle {
+  text-align: center;
+  margin-bottom: 18px;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.weekly_chart {
+  width: 100%;
+}
+
+.weekly_chart_svg {
+  width: 100%;
+  display: block;
+}
+
+.chart_grid_line {
+  stroke: #d8d8d8;
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.chart_axis_line {
+  stroke: var(--color_grey);
+  stroke-width: 1.2;
+}
+
+.chart_axis_label,
+.chart_week_label {
+  fill: var(--color_black);
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+}
+
+.chart_bar {
+  stroke: var(--color_black);
+  stroke-width: 1;
+}
+
+.chart_bar.blue,
+.chart_legend_dot.blue {
+  fill: var(--color_accent-blue);
+  background: var(--color_accent-blue);
+}
+
+.chart_bar.pink,
+.chart_legend_dot.pink {
+  fill: var(--color_accent-pink);
+  background: var(--color_accent-pink);
+}
+
+.chart_bar.green,
+.chart_legend_dot.green {
+  fill: var(--color_accent-green);
+  background: var(--color_accent-green);
+}
+
+.chart_bar.orange,
+.chart_legend_dot.orange {
+  fill: var(--color_accent-orange);
+  background: var(--color_accent-orange);
+}
+
+.chart_legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 12px;
+  margin-top: -8px;
+}
+
+.chart_legend_item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--color_grey);
+  font-family: "Roboto", sans-serif;
+}
+
+.chart_legend_dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
