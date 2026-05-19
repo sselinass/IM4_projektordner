@@ -1143,3 +1143,34 @@ button, input {
   height: 12px;
   border-radius: 50%;
 }
+
+/* =========================================================
+   APP TOPBAR / LOGOUT
+   ========================================================= */
+
+.app_topbar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.logout_button {
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--color_grey);
+  border-radius: 999px;
+  background: var(--color_white);
+  color: var(--color_grey);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: "Geologica", sans-serif;
+}
+
+.logout_button:hover {
+  background: var(--color_accent-yellow);
+}
+
+.logout_button:active {
+  transform: scale(0.97);
+}
