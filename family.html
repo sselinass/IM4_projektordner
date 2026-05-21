@@ -1,27 +1,32 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de-CH">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family</title>
+    <title>Family | Ready Set Dinner</title>
     <link rel="icon" type="image/png" href="resources/assets/icons/bell.svg">
     <link rel="stylesheet" href="css/style.css">
-    <style> @import url('https://fonts.googleapis.com/css2?family=Geologica:wght,CRSV@100..900,0&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');</style>
 </head>
 
-<body>
+<body class="app_body">
 
-    <main class="family_page">
+    <main class="app_main family_page">
 
-        <header class="family_header">
-            <h1 class="family_title">Family </h1>
-            <p class="family_subtitle"> Add your family members and assign a buzzer color.</p>
+        <header class="page_header">
+            <h1>Family</h1>
+            <p class="subtitle">Add your family members and assign a buzzer color.</p>
         </header>
 
+        <div id="family_members" class="family_members"></div>
 
-        <section id="family_members" class="family_members"></section>
-        <button id="add_member_button" class="btn_tertiary">+ Add Member</button>
+        <button id="add_member_button" class="btn btn_secondary add_member_button" type="button">
+            + Add Member
+        </button>
+
+        <button id="change_family_button" class="btn btn_secondary change_family_button" type="button">
+            Logout to Change Family
+        </button>
 
     </main>
 
@@ -57,16 +62,44 @@
                 </div>
 
                 <div class="member_modal_actions">
-                    <button type="button" id="cancel_member_button" class="button_secondary"> Cancel</button>
-                    <button type="submit" class="button_primary">Save</button>
+                    <button type="button" id="cancel_member_button" class="btn btn_secondary">
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="btn btn_primary">
+                        Save
+                    </button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <div id="delete_member_modal" class="member_modal is_hidden" role="dialog" aria-modal="true"
+        aria-labelledby="delete_member_title">
+        <div class="delete_modal_card">
+            <h2 id="delete_member_title">Delete Family Member?</h2>
+
+            <p id="delete_member_text" class="delete_modal_text">
+                Do you really want to delete this family member?
+            </p>
+
+            <div class="delete_modal_actions">
+                <button type="button" id="cancel_delete_member_button" class="btn btn_secondary">
+                    Cancel
+                </button>
+
+                <button type="button" id="confirm_delete_member_button" class="btn btn_primary delete_confirm_button">
+                    Delete
+                </button>
+            </div>
         </div>
     </div>
 
     <div id="bottom_nav_container"></div>
 
     <script src="js/bottom-nav.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/logout.js"></script>
     <script src="js/family.js"></script>
 
 </body>

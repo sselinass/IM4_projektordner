@@ -43,7 +43,7 @@ function renderGoalCard(goal) {
   return `
     <section class="goal_card">
       <div class="goal_badge">
-        <img src="../resources/assets/icons/cup.svg" alt="cup icon">
+        <img src="resources/assets/icons/cup.svg" alt="Cup Icon">
         <span>Current Goal</span>
       </div>
 

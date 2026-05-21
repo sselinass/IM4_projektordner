@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="de-CH">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Goals | Ready Set Dinner</title>
   <link rel="icon" type="image/png" href="resources/assets/icons/bell.svg">
   <link rel="stylesheet" href="css/style.css">
-  <style> @import url('https://fonts.googleapis.com/css2?family=Geologica:wght,CRSV@100..900,0&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');</style>
 </head>
+
 <body class="app_body">
   <main class="app_main">
     <header class="page_header">
@@ -15,17 +16,17 @@
       <p class="subtitle">Manage your family's reward goals</p>
     </header>
 
-    <section id="active_goal_area"></section>
+    <div id="active_goal_area"></div>
 
-    <section class="goal_actions">
+    <div class="goal_actions">
       <button id="collect_goal_btn" class="btn btn_primary collect_button" type="button">
         Collect Now
       </button>
-    </section>
+    </div>
 
     <h2 class="section_title">Future Goals</h2>
 
-    <section id="future_goals_list" class="goals_list"></section>
+    <div id="future_goals_list" class="goals_list"></div>
 
     <button id="show_goal_form_btn" class="btn add_goal_button" type="button">
       <span>＋</span>
@@ -36,24 +37,11 @@
       <h2>New Goal</h2>
 
       <form id="goal_form" class="goal_form">
-        <input
-          type="text"
-          id="goal_title"
-          class="form_input"
-          maxlength="50"
-          placeholder="Goal title (e.g., 'Theme Park Visit')"
-          required
-        >
+        <input type="text" id="goal_title" class="form_input" maxlength="50"
+          placeholder="Goal title (e.g., 'Theme Park Visit')" required>
 
-        <input
-          type="number"
-          id="goal_points_required"
-          class="form_input"
-          min="1"
-          step="1"
-          placeholder="Points required"
-          required
-        >
+        <input type="number" id="goal_points_required" class="form_input" min="1" step="1" placeholder="Points required"
+          required>
 
         <div class="goal_form_actions">
           <button class="btn btn_primary" type="submit">Save</button>
@@ -71,4 +59,5 @@
   <script src="js/auth.js"></script>
   <script src="js/goals.js"></script>
 </body>
+
 </html>

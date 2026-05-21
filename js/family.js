@@ -41,8 +41,28 @@ const member_form =
 const icon_selection =
   document.getElementById("icon_selection");
 
+const delete_member_modal =
+  document.getElementById("delete_member_modal");
+
+const delete_member_text =
+  document.getElementById("delete_member_text");
+
+const cancel_delete_member_button =
+  document.getElementById("cancel_delete_member_button");
+
+const confirm_delete_member_button =
+  document.getElementById("confirm_delete_member_button");
+
+let deleting_member_id = null;
+
 
 async function initFamilyPage() {
+  const user = await requireAuth();
+
+  if (!user) {
+    return;
+  }
+
   createIconSelection();
   setupEventListeners();
   await loadFamilyMembers();
@@ -63,6 +83,22 @@ function setupEventListeners() {
   member_form.addEventListener(
     "submit",
     saveFamilyMember
+  );
+
+  cancel_delete_member_button.addEventListener(
+    "click",
+    closeDeleteModal
+  );
+
+  confirm_delete_member_button.addEventListener(
+    "click",
+    async function () {
+      if (!deleting_member_id) {
+        return;
+      }
+
+      await deleteFamilyMember(deleting_member_id);
+    }
   );
 }
 
@@ -198,14 +234,21 @@ function renderFamilyMembers() {
 function setupMemberActionButtons() {
 
   document
-    .querySelectorAll(".member_action_button.delete")
-    .forEach(button => {
-      button.addEventListener("click", async () => {
-        const memberId = button.dataset.id;
+  .querySelectorAll(".member_action_button.delete")
+  .forEach(button => {
+    button.addEventListener("click", () => {
+      const memberId = Number(button.dataset.id);
 
-        await deleteFamilyMember(memberId);
-      });
+      const member =
+        family_members.find(member => Number(member.ID) === memberId);
+
+      if (!member) {
+        return;
+      }
+
+      openDeleteModal(member);
     });
+  });
 
 
   document
@@ -224,33 +267,55 @@ function setupMemberActionButtons() {
     });
 }
 
+function openDeleteModal(member) {
+  deleting_member_id = member.ID;
+
+  delete_member_text.textContent =
+    `Do you really want to delete ${member.name}?`;
+
+  delete_member_modal.classList.remove("is_hidden");
+}
+
+
+function closeDeleteModal() {
+  deleting_member_id = null;
+
+  delete_member_text.textContent =
+    "Do you really want to delete this family member?";
+
+  delete_member_modal.classList.add("is_hidden");
+}
+
+
 async function deleteFamilyMember(memberId) {
+  try {
+    const response =
+      await fetch("api/delete_family_member.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          id: memberId
+        })
+      });
 
-  const confirmed =
-    confirm("Do you really want to delete this family member?");
+    const result =
+      await response.json();
 
-  if (!confirmed) return;
+    if (result.status !== "success") {
+      alert(result.message);
+      return;
+    }
 
-  const response =
-    await fetch("api/delete_family_member.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        id: memberId
-      })
-    });
+    closeDeleteModal();
 
-  const result =
-    await response.json();
+    await loadFamilyMembers();
 
-  if (result.status !== "success") {
-    alert(result.message);
-    return;
+  } catch (error) {
+    console.error("Could not delete family member:", error);
+    alert("Family Member konnte nicht gelöscht werden.");
   }
-
-  await loadFamilyMembers();
 }
 
 
@@ -259,7 +324,7 @@ function updateAddButton() {
   if (family_members.length >= 4) {
     add_member_button.style.display = "none";
   } else {
-    add_member_button.style.display = "block";
+    add_member_button.style.display = "flex";
   }
 
   disableUsedColors();

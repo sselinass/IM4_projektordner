@@ -1,33 +1,29 @@
 <!DOCTYPE html>
 <html lang="de-CH">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home | Ready Set Dinner</title>
   <link rel="icon" type="image/png" href="resources/assets/icons/bell.svg">
   <link rel="stylesheet" href="css/style.css">
-  <style> @import url('https://fonts.googleapis.com/css2?family=Geologica:wght,CRSV@100..900,0&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');</style>
 </head>
+
 <body class="app_body">
   <main class="app_main">
-    <div class="app_topbar">
-  <button id="logout_button" class="logout_button" type="button">
-    Logout
-  </button>
-</div>
     <header class="page_header">
       <h1>Ready Set Dinner</h1>
       <p class="subtitle">Press the buzzer when dinner is ready!</p>
     </header>
 
-    <section id="active_goal_area"></section>
+    <div id="active_goal_area"></div>
 
     <button id="start_round_btn" class="btn btn_primary call_button" type="button">
       <img src="resources/assets/icons/bell.svg" alt="Dinner Bell Icon">
       <span>Start Dinner Call</span>
     </button>
 
-    <section id="timer_card" class="timer_card">
+    <div id="timer_card" class="timer_card">
       <div id="timer_display" class="timer_display">0:00.00</div>
 
       <div class="progress_bar timer_bar">
@@ -37,7 +33,7 @@
       <button id="reset_timer_btn" class="btn btn_secondary timer_reset" type="button">
         Reset
       </button>
-    </section>
+    </div>
 
     <section id="buzzer_panel" class="buzzer_panel">
       <h2>Press Your Buzzer</h2>
@@ -54,4 +50,5 @@
   <script src="js/home.js"></script>
   <script src="js/logout.js"></script>
 </body>
+
 </html>

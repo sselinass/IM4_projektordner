@@ -1,10 +1,10 @@
 // js/logout.js
 
-const logoutButton =
-  document.getElementById("logout_button");
+const changeFamilyButton =
+  document.getElementById("change_family_button");
 
-if (logoutButton) {
-  logoutButton.addEventListener("click", async function (event) {
+if (changeFamilyButton) {
+  changeFamilyButton.addEventListener("click", async function (event) {
     event.preventDefault();
 
     try {
@@ -22,11 +22,11 @@ if (logoutButton) {
         return;
       }
 
-      alert("Logout failed. Please try again.");
+      alert("Family konnte nicht gewechselt werden. Bitte versuche es erneut.");
 
     } catch (error) {
-      console.error("Logout error:", error);
-      alert("Something went wrong during logout!");
+      console.error("Change family error:", error);
+      alert("Beim Wechseln der Family ist ein Fehler aufgetreten.");
     }
   });
 }
