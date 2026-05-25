@@ -78,13 +78,23 @@ h2 {
   color: var(--color_black);
 }
 
+h3{
+  font-family: "Geologica", sans-serif;
+  font-weight: 700;
+  font-optical-sizing: auto;
+  font-size: 18px;
+  font-style: normal;
+  line-height: 22px;
+  color: var(--color_black);
+}
+
 p {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
   font-style: normal;
   font-size: 14px;
   font-optical-sizing: auto;
-  line-height: 14px;
+  line-height: 20px;
   color: var(--color_grey);
 }
 
@@ -541,16 +551,6 @@ button, input {
   gap: 10px;
 }
 
-.goal_list_item h3 {
-  font-size: 20px;
-  line-height: 22px;
-  margin-bottom: 4px;
-}
-
-.goal_list_item p {
-  line-height: 18px;
-}
-
 .icon_button {
   width: 39px;
   height: 39px;
@@ -688,6 +688,9 @@ button, input {
   background: var(--color_white);
   font-size: 14px;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .member_icon_wrapper {
@@ -704,19 +707,6 @@ button, input {
 .member_icon {
   width: 34px;
   height: 34px;
-}
-
-
-
-.member_name {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.member_points {
-  margin-top: 4px;
-  font-size: 13px;
-  color: var(--color_grey);
 }
 
 .member_color {
@@ -986,19 +976,7 @@ button, input {
   height: 30px;
 }
 
-.stats_member_card h3 {
-  font-size: 18px;
-  line-height: 22px;
-  font-weight: 700;
-}
-
 .stats_member_card p {
-  margin-top: 4px;
-  font-family: "Geologica", sans-serif;
-  font-size: 13px;
-  line-height: 18px;
-  font-weight: 400;
-  color: var(--color_grey);
   opacity: 1;
 }
 
@@ -1013,14 +991,6 @@ button, input {
   font-weight: 700;
 }
 
-.stats_points span {
-  display: block;
-  margin-top: 4px;
-  font-size: 13px;
-  line-height: 18px;
-  color: var(--color_grey);
-  opacity: 1;
-}
 
 .stats_toggle_button {
   width: 148px;

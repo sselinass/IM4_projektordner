@@ -190,16 +190,15 @@ function renderFutureGoals(goals) {
         type="button"
         aria-label="Set active goal"
         data-action="activate"
-        data-goal-id="${goal.ID}"
-      >○</button>
+        data-goal-id="${goal.ID}"><img src="../resources/assets/icons/addgoal.svg" alt="Cup Icon"></button>
 
       <button
         class="icon_button"
         type="button"
         aria-label="Delete goal"
         data-action="delete"
-        data-goal-id="${goal.ID}"
-      >⌫</button>
+        data-goal-id="${goal.ID}">
+        <img src="../resources/assets/icons/bin.svg" alt="Cup Icon"></button>
     </article>
   `;
 }).join("");

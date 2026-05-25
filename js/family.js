@@ -195,11 +195,11 @@ function renderFamilyMembers() {
 
         <div>
           <div class="member_name">
-            ${member.name}
+           <h3>${member.name}</h3>
           </div>
 
           <div class="member_points" title="${Number(member.total_points || 0)} total points">
-            ${formatPoints(member.total_points)} total points
+           <p>${formatPoints(member.total_points)} total points</p>
           </div>
         </div>
 

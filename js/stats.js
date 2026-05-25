@@ -96,8 +96,8 @@ function renderStatsMembers() {
         </div>
 
         <div class="stats_points">
-          <strong>${formattedValue}</strong>
-          <span>points</span>
+          <h3>${formattedValue}</h3>
+          <p>points</p>
         </div>
       </article>
     `;
