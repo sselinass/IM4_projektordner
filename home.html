@@ -18,30 +18,35 @@
       <p class="subtitle">Press the buzzer when dinner is ready!</p>
     </header>
 
-    <div id="active_goal_area"></div>
-
-    <button id="start_round_btn" class="btn btn_primary call_button" type="button">
-      <img src="resources/assets/icons/bell.svg" alt="Dinner Bell Icon">
-      <span>Start Dinner Call</span>
-    </button>
-
-    <div id="timer_card" class="timer_card">
-      <div id="timer_display" class="timer_display">0:00.00</div>
-
-      <div class="progress_bar timer_bar">
-        <div id="timer_fill" class="progress_fill timer_fill"></div>
+    <div class="call_container">
+      <div class="active_goal_container">
+        <div id="active_goal_area"></div>
       </div>
 
-      <button id="reset_timer_btn" class="btn btn_secondary timer_reset" type="button">
-        Reset
-      </button>
+      <div class="dinner_call_container">
+          <button id="start_round_btn" class="btn btn_primary call_button" type="button">
+            <img src="resources/assets/icons/bell.svg" alt="Dinner Bell Icon">
+            <span>Start Dinner Call</span>
+          </button>   
+
+        <div id="timer_card" class="timer_card">
+          <div id="timer_display" class="timer_display">0:00.00</div>
+          <div class="progress_bar timer_bar">
+            <div id="timer_fill" class="progress_fill timer_fill"></div>
+          </div>
+
+          <button id="reset_timer_btn" class="btn btn_secondary timer_reset" type="button">
+            Reset
+          </button>
+        </div>
+
+        <section id="buzzer_panel" class="buzzer_panel">
+          <h2>Press Your Buzzer</h2>
+
+          <div id="buzzer_grid" class="buzzer_grid"></div>
+        </section>
+      </div> 
     </div>
-
-    <section id="buzzer_panel" class="buzzer_panel">
-      <h2>Press Your Buzzer</h2>
-
-      <div id="buzzer_grid" class="buzzer_grid"></div>
-    </section>
   </main>
 
 

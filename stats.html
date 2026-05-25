@@ -19,27 +19,27 @@
       <p class="subtitle">Track your family's performance</p>
     </header>
 
-    <section class="stats_card">
-      <h2>This Week's Points</h2>
+    <div class="stats_container">
+      <section class="stats_card">
+        <h2>This Week's Points</h2>
+        <div id="stats_members_list" class="stats_members_list">
+          <p>Loading statistics...</p>
+        </div>
 
-      <div id="stats_members_list" class="stats_members_list">
-        <p>Loading statistics...</p>
-      </div>
+        <button id="stats_toggle_button" class="btn btn_primary stats_toggle_button" type="button">
+          Show Average
+        </button>
+      </section>
 
-      <button id="stats_toggle_button" class="btn btn_primary stats_toggle_button" type="button">
-        Show Average
-      </button>
-    </section>
+      <section class="stats_card stats_chart_card">
+        <h2>Weekly Trends</h2>
+        <p class="stats_chart_subtitle">(Last 3 Weeks)</p>
 
-    <section class="stats_card stats_chart_card">
-      <h2>Weekly Trends</h2>
-      <p class="stats_chart_subtitle">(Last 3 Weeks)</p>
-
-      <div id="weekly_chart" class="weekly_chart">
-        <p>Loading chart...</p>
-      </div>
-    </section>
-
+        <div id="weekly_chart" class="weekly_chart">
+          <p>Loading chart...</p>
+        </div>
+      </section>
+    </div>
   </main>
 
   <div id="bottom_nav_container"></div>
