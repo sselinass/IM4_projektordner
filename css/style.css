@@ -179,7 +179,6 @@ button, input {
   bottom: 0;
   transform: translateX(-50%);
   width: 100%;
-  max-width: var(--page_width);
   height: 74px;
   border-top: 1px solid var(--color_black);
   background: var(--color_white);
@@ -794,7 +793,7 @@ button, input {
   inset: 0;
   background: rgba(0,0,0,0.45);
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   z-index: 200;
 }
@@ -804,10 +803,9 @@ button, input {
 }
 
 .member_modal_card {
-  width: 100%;
-  max-width: var(--page_width);
+  width: 90%;
   background: var(--color_white);
-  border-radius: 28px 28px 0 0;
+  border-radius: 28px;
   padding: 28px 20px 40px;
 }
 
@@ -854,8 +852,8 @@ button, input {
 
 
 .icon_selection .icon_button {
-  width: 56px;
-  height: 56px;
+  width: 80px;
+  height: 80px;
   border-radius: 18px;
   border: 1px solid var(--color_grey);
   background: var(--color_white);
@@ -929,7 +927,7 @@ button, input {
   width: 100%;
   max-width: var(--page_width);
   background: var(--color_white);
-  border-radius: 28px 28px 0 0;
+  border-radius: 28px;
   padding: 28px 20px 40px;
   text-align: center;
 }
@@ -1202,6 +1200,10 @@ button, input {
     display: none;
   }
 
+  .auth_page {
+  width: 35%;
+  }
+
   .app_main {
     margin: 0% 10% 0% 10%;
     padding: 48px 0 0 0;
@@ -1225,12 +1227,15 @@ button, input {
   }
 
   .buzzer_button{
-    width: 150px;
-    height: 150px;
+    width: 20%;
+    height: 20%;
   }
 
   .buzzer_grid{
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1%;
   }
 
   .goals_container{
@@ -1242,6 +1247,9 @@ button, input {
 
   .active_goal_container{
     width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .future_goals_container{
@@ -1255,6 +1263,10 @@ button, input {
 
   .app_main_family_page{
     width:50%;
+  }
+
+  .member_modal_card {
+  width: 45%;
   }
 
   .stats_container{
