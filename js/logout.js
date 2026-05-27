@@ -33,13 +33,13 @@ document.addEventListener("click", function (event) {
 
   if (logoutButton) {
     event.preventDefault();
-    logoutUser("login.html");
+    logoutUser("./index.html");
     return;
   }
 
   if (changeFamilyButton) {
     event.preventDefault();
-    logoutUser("index.html");
+    logoutUser("./index.html");
     return;
   }
 });
