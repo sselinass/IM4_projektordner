@@ -1,32 +1,45 @@
 // js/logout.js
 
-const changeFamilyButton =
-  document.getElementById("change_family_button");
+async function logoutUser(redirectTarget) {
+  try {
+    const response =
+      await fetch("api/logout.php", {
+        method: "GET",
+        credentials: "include"
+      });
 
-if (changeFamilyButton) {
-  changeFamilyButton.addEventListener("click", async function (event) {
-    event.preventDefault();
+    const result =
+      await response.json();
 
-    try {
-      const response =
-        await fetch("api/logout.php", {
-          method: "GET",
-          credentials: "include"
-        });
-
-      const result =
-        await response.json();
-
-      if (result.status === "success") {
-        window.location.href = "index.html";
-        return;
-      }
-
-      alert("Family konnte nicht gewechselt werden. Bitte versuche es erneut.");
-
-    } catch (error) {
-      console.error("Change family error:", error);
-      alert("Beim Wechseln der Family ist ein Fehler aufgetreten.");
+    if (result.status === "success") {
+      window.location.href = redirectTarget;
+      return;
     }
-  });
+
+    alert("Logout konnte nicht durchgeführt werden. Bitte versuche es erneut.");
+
+  } catch (error) {
+    console.error("Logout error:", error);
+    alert("Beim Logout ist ein Fehler aufgetreten.");
+  }
 }
+
+document.addEventListener("click", function (event) {
+  const logoutButton =
+    event.target.closest("#logout_button");
+
+  const changeFamilyButton =
+    event.target.closest("#change_family_button");
+
+  if (logoutButton) {
+    event.preventDefault();
+    logoutUser("login.html");
+    return;
+  }
+
+  if (changeFamilyButton) {
+    event.preventDefault();
+    logoutUser("index.html");
+    return;
+  }
+});
