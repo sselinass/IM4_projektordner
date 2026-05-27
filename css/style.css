@@ -1246,12 +1246,32 @@ button, input {
     gap: 20px;
   }
 
-  .active_goal_container{
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  .active_goal_container {
+  width: 50%;
+}
+
+.goals_container .active_goal_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.goals_container #active_goal_area {
+  width: 100%;
+}
+
+.goals_container .goal_actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.goals_container .collect_button.is_visible {
+  width: 160px;
+  display: flex;
+}
 
   .future_goals_container{
     width: 50%;
