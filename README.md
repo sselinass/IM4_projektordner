@@ -1,73 +1,131 @@
-# 🔑👤 Authentifizierung Minimal (Boilerplate)
+## Ready Set Dinner – Projekt-Dokumentation (IM4)
 
-![Static Badge](https://img.shields.io/badge/Sprache-PHP-%23f7df1e)
-![Static Badge](https://img.shields.io/badge/Kurs-MMP_IM4-blue)
-![Last Changed](https://img.shields.io/endpoint?url=https://badges.crazy-internet.ch/im4_example.php)
+**Ready Set Dinner** ist ein webbasiertes „Dinner-Call“-Spiel: Eine Runde wird gestartet, Family Members drücken ihren Buzzer (Web oder physisch via ESP32), es werden **Reaktionszeiten gemessen** und **Punkte** vergeben. Punkte fliessen in ein **Goal-System** (Ziele sammeln/einlösen) sowie **Statistiken** (Woche/Trend).
 
-> 🎨 Dieses Boilerplate kann entweder in einem Code-Along Schritt für Schritt gemeinsam erarbeitet werden oder fixfertig auf einem Webserver installiert werden.
+### Features
+- **Login/Session-Auth**: Registrierung, Login, Logout, geschützte API via PHP Sessions
+- **Family Management**: bis zu 4 Members, Icon + Buzzer-Farbe, (Soft-)Delete
+- **Dinner Call (Runden)**: Start, Buzzer-Events, Timeout/Cancel, Live-Sync (Polling)
+- **Goals**: aktive/future Goals, aktiv setzen, einlösen (Punkte ausgeben)
+- **Stats**: Wochenpunkte + Trend über mehrere Wochen
+- **Physical Computing**: ESP32 sendet Events als JSON an die API (`api/load.php`)
 
-Dieses Repository beinhaltet ein vollständiges, minimales Authenzifizierungs-System basierend auf PHP als Backend und HTML/CSS/JS als Frontend.
+Eine Erklärung zur Authentifizierung (Sessions/Cookies) findest du in [`sessions.md`](sessions.md).
 
-Es ermöglicht Benutzern das `Registrieren`, `Anmelden`, `Abmelden` und den Zugriff auf eine `geschützte Seite` nach erfolgreicher Authentifizierung.
+---
 
-Eine einfache Erklärung des Login-Ablaufs mit Sessions und Cookies findest du in [`sessions.md`](sessions.md).
+### Architektur (kurz)
+- **Frontend**: statische Seiten (`*.html`), Styles (`css/style.css`), Logik (`js/*.js`)
+- **UI-Partials**: `components/top-nav.html`, `components/bottom-nav.html` werden per `fetch` geladen
+- **Backend**: `api/*.php` als JSON-Endpunkte
+- **Shared Backend**
+  - `api/_init.php`: Session start, JSON helpers, `require_user_id()`, lädt DB-Config
+  - `api/_game_logic.php`: zentrale Round-/Buzzer-/Punkte-Logik
+- **Datenbank**: MySQL/MariaDB
+- **Hardware**: Arduino/ESP32 Sketch in `hardware/esp32/`
 
-# 🏁 Live - Version
+---
 
-Du kannst Homely unter folgendem Link testen:
+### Projektstruktur
+- **`/` (Root)**: HTML-Seiten (`index.html`, `home.html`, `goals.html`, `family.html`, `stats.html`, `login.html`, `register.html`)
+- **`components/`**: HTML-Partials für Navigation
+- **`css/`**: Styles
+- **`js/`**: Frontend-Logik (API Calls, Rendering)
+- **`api/`**: PHP-API-Endpunkte
+- **`system/`**: DB-Konfiguration (`config.php`) + SQL (`db.sql`)
+- **`hardware/esp32/`**: Physical-Computing Code (`*.ino`)
+- **`resources/`**: Assets (Icons, Bilder, SVGs)
 
-[https://im4.crazy-internet.ch/](https://im4.crazy-internet.ch/)
+---
 
-## ⚙️ Installation
+### Lokales Setup (Development)
 
-Um dieses Boilerplate auf dem eigenen Web-Server zu installieren, führe folgende Schritte aus:
+#### 1) Datenbank (MySQL/MariaDB)
+- Importiere mindestens `system/db.sql` (enthält die Tabelle `users`).
+- Für das volle Projekt brauchst du zusätzlich Tabellen wie `members`, `goal`, `rounds`, `buzzer_events`, `input_events` (werden von den API-Endpunkten verwendet).
+- Zusatz-/Änderungs-SQL liegt aktuell z.B. in `00_ChatGPT Dateien/db_update_goals.sql`.
 
-### 1. Download
+#### 2) DB-Verbindung konfigurieren
+In `api/_init.php` wird `../system/config.php` eingebunden. Dort muss ein `$pdo` existieren.
 
-- [Klone das Repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) über GitHub oder [downloade das Repository als ZIP Datei](https://docs.github.com/en/repositories/working-with-files/using-files/downloading-source-code-archives) auf deinen eigenen Computer.
+`system/config.php` ist aktuell leer und sollte z.B. so aufgebaut sein (Beispiel):
 
-### 2. Datenbank
+```php
+<?php
+declare(strict_types=1);
 
-- Erstelle eine neue Datenbank bei deinem Hoster (z.B. [Infomaniak](https://www.infomaniak.com/de/support/faq/1981/mysqlmariadb-benutzer-und-datenbanken-verwalten)).
+$pdo = new PDO(
+  'mysql:host=localhost;dbname=READY_SET_DINNER;charset=utf8mb4',
+  'DB_USER',
+  'DB_PASS',
+  [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+  ]
+);
+```
 
-- Importiere die Datei `system/database.sql` in die neue Datenbank, um die `users` Tabelle zu erstellen.
+#### 3) Lokalen PHP Server starten
+Im Repo-Root:
 
-### 3. Code
+```bash
+php -S localhost:8000
+```
 
-- Benenne die Datei `system/config.php.blank` in `system/config.php` um.
+Dann im Browser öffnen:
+- `http://localhost:8000/index.html`
 
-- Passe die Datenbankverbindungsdaten in der Datei `system/config.php` an.
+---
 
-### 4. FTP Connect
+### Nutzung (User Flow)
+- **Register**: `register.html` → `api/register.php`
+- **Login**: `login.html` → `api/login.php` (Session wird gesetzt)
+- **App**: `home.html`, `goals.html`, `family.html`, `stats.html`
+  - Jede Seite ruft `js/auth.js` → `api/protected.php` auf. Bei `401` erfolgt Redirect auf `index.html`.
 
-- Erstelle eine neue FTP Verbindung mit dem SFTP Plugin gemäss [Anleitung im MMP 101](https://github.com/Interaktive-Medien/101-MMP/blob/main/resources/sftp.md).
+---
 
-# 📁 Struktur
+### Wichtige API-Endpunkte (Übersicht)
 
-## 🎨 Frontend
+#### Auth
+- **`POST api/register.php`**: `{ email, password }`
+- **`POST api/login.php`**: `{ email, password }`
+- **`GET api/logout.php`**
+- **`GET api/protected.php`**: Session-Check
 
-### root (Basis-Verzeichnis)
+#### Home / Runden
+- **`GET api/get_active_goal.php`**
+- **`GET api/get_members.php`**
+- **`POST api/start_round.php`**: startet Runde
+- **`GET api/get_round_state.php`**: aktive Runde + Events (Polling)
+- **`POST api/create_buzzer_event.php`**: `{ member_id }`
+- **`POST api/cancel_round.php`**: bricht letzte Runde ab und zieht Punkte wieder ab
+- **`POST api/load.php`**: Physical-Computing Ingest (ESP sendet `{ buzzer_events, id_users, timestamp }`)
 
-- beinhaltet alle HTML-Dateien des Frontends.
-- beinhaltet die `.gitignore` Datei, welche die Dateien und Verzeichnisse ausblendet, die nicht auf GitHub hochgeladen werden sollen.
+#### Goals
+- **`GET api/get_goals.php`**
+- **`POST api/create_goal.php`**: `{ goal, points_required }`
+- **`POST api/set_active_goal.php`**: `{ goal_id }`
+- **`POST api/delete_goal.php`**: `{ goal_id }`
+- **`POST api/collect_goal.php`**
 
-### js
+#### Family + Stats
+- **`GET api/get_family_members.php`**
+- **`POST api/create_family_member.php`**
+- **`POST api/update_family_member.php`**
+- **`POST api/delete_family_member.php`**
+- **`GET api/get_stats.php`**
 
-- beinhaltet alle JavaScript-Dateien des Frontends.
+---
 
-### css
+### Physical Computing (ESP32 / Arduino)
+- Sketch: `hardware/esp32/PysicalComputing.ino`
+- Sendet Events (z.B. `Start`, `Buzzer_1..4`, `End`) als **HTTP POST JSON** an `api/load.php`.
+- Nutzt NTP-Zeit, damit Events serverseitig korrekt zeitlich eingeordnet werden können.
 
-- beinhaltet alle CSS-Dateien des Frontends.
+---
 
-## 🤖 Backend
+### Hinweise / Known Issues
+- **DB-Schema**: `system/db.sql` enthält nur die `users`-Tabelle; das Projekt benötigt darüber hinaus weitere Tabellen, die von den API-Endpunkten verwendet werden.
+- **`system/config.php`**: muss `$pdo` bereitstellen, sonst schlagen alle `api/*` Requests fehl.
 
-### api
-
-- Beinhaltet alle API-Endpunkte des Backends.
-- Diese Dateien werden von `JavaScript` aufgerufen und geben eine Antwort an `JavaScript` zurück.
-
-### system
-
-- Beinhaltet die Konfigurationsdatei für die Datenbankverbindung.
-- Beinhaltet die Datei `database.sql`, die die `users` Tabelle erstellt.
-- Beinhaltet die Datei `config.php`, die die Konfiguration des Backends enthält.
