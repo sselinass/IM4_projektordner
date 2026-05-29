@@ -1,3 +1,4 @@
+// goals.js: Logik für die Verwaltung der Ziele auf der Goals-Seite
 const activeGoalArea = document.getElementById("active_goal_area");
 const collectGoalBtn = document.getElementById("collect_goal_btn");
 const futureGoalsList = document.getElementById("future_goals_list");

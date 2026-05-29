@@ -1,5 +1,5 @@
 <?php
-// api/get_round_state.php
+// api/get_round_state.php - API-Endpunkt zum Abrufen des aktuellen Rundenstatus, einschließlich Validierung der Benutzersitzung, Transaktionsmanagement und Fehlerbehandlung
 
 require_once '_init.php';
 

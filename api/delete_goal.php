@@ -1,5 +1,5 @@
 <?php
-// api/delete_goal.php
+// api/delete_goal.php - API-Endpunkt zum Löschen eines inaktiven Ziels, einschließlich Validierung der Goal-ID, Transaktionsmanagement und Fehlerbehandlung
 require_once '_init.php';
 
 $userId = require_user_id();

@@ -1,3 +1,4 @@
+// stats.js: Logik für die Anzeige der Statistiken auf der Stats-Seite
 let statsData = null;
 let statsMode = "total";
 

@@ -1,5 +1,5 @@
 <?php
-// login.php
+// login.php - API-Endpunkt zum Anmelden eines Benutzers, einschließlich Validierung der Anmeldeinformationen und Verwaltung der Sitzung
 ini_set('session.cookie_httponly', 1);
 // ini_set('session.cookie_secure', 1); // if using HTTPS
 session_start();

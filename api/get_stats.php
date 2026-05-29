@@ -1,5 +1,5 @@
 <?php
-// api/get_stats.php
+// api/get_stats.php - API-Endpunkt zum Abrufen von Statistiken für Familienmitglieder, einschließlich Berechnung von Gesamtpunkten, Durchschnittspunkten und Trenddaten über mehrere Wochen hinweg
 
 require_once '_init.php';
 

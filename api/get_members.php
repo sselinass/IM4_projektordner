@@ -1,5 +1,5 @@
 <?php
-// api/get_members.php
+// api/get_members.php - API-Endpunkt zum Abrufen der aktiven Familienmitglieder eines Benutzers, einschließlich Validierung der Benutzersitzung und Fehlerbehandlung
 require_once '_init.php';
 
 $userId = require_user_id();

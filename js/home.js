@@ -1,3 +1,5 @@
+// home.js: Logik für die Hauptseite mit Timer, aktivem Ziel und Buzzer-Panel
+
 let timerInterval = null;
 let timerStartedAt = null;
 let roundStateInterval = null;

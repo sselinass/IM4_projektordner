@@ -1,3 +1,4 @@
+// auth.js: Logik für die Authentifizierung und den Zugriff auf geschützte Ressourcen
 async function requireAuth() {
   const response = await fetch("/api/protected.php", {
     credentials: "include",

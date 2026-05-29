@@ -1,5 +1,5 @@
 <?php
-// api/create_buzzer_event.php
+// api/create_buzzer_event.php - API-Endpunkt zum Erstellen eines neuen Buzzer-Events basierend auf der Mitglieds-ID, einschließlich Validierung der Eingabedaten, Transaktionsmanagement und Fehlerbehandlung
 
 require_once '_init.php';
 require_once '_game_logic.php';

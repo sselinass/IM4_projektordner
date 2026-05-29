@@ -1,5 +1,5 @@
 <?php
-// api/get_family_members.php
+// api/get_family_members.php - API-Endpunkt zum Abrufen der aktiven Familienmitglieder eines Benutzers, einschließlich ihrer aktuellen Punktestände, mit Validierung der Benutzersitzung und Fehlerbehandlung
 
 require_once '_init.php';
 

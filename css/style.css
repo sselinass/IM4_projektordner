@@ -1,3 +1,5 @@
+/* style.css: Zentrale CSS-Datei für die gesamte App, enthält globale Styles, Farben, sowie spezifische Styles für jede Seite und Komponente */
+
 @import url("https://fonts.googleapis.com/css2?family=Geologica:wght,CRSV@100..900,0&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
@@ -1166,7 +1168,7 @@ button, input {
 }
 
 /* =========================================================
-   RESPONSIVE DESIGN - Es Problem für säter
+   RESPONSIVE DESIGN 
    ========================================================= */
    
 @media (max-width: 392px) {
@@ -1180,11 +1182,7 @@ button, input {
   }
 }
 
-/*
-|--------------------------------------------------------------------------
-| desktop
-|--------------------------------------------------------------------------
-*/
+/*DESKTOP*/
 
 @media (min-width: 1024px) {
 

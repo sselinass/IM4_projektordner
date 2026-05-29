@@ -1,5 +1,5 @@
 <?php
-// index.php (API that returns JSON about the logged-in user)
+// index.php (API that returns JSON about the logged-in user) - API-Endpunkt, der Informationen über den aktuell angemeldeten Benutzer zurückgibt, einschließlich Validierung der Sitzung und Rückgabe von Benutzerinformationen im JSON-Format
 session_start();
 
 if (!isset($_SESSION['user_id'])) {

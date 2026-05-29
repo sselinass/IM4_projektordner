@@ -1,5 +1,5 @@
 <?php
-// api/cancel_round.php
+// api/cancel_round.php - API-Endpunkt zum Abbrechen einer aktiven Runde, einschließlich Validierung der Benutzersitzung, Transaktionsmanagement und Fehlerbehandlung
 
 require_once '_init.php';
 

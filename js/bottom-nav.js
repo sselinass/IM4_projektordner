@@ -1,3 +1,4 @@
+// bottom-nav.js: Dynamisches Laden der Bottom-Navigation und Hervorheben des aktiven Links
 async function loadBottomNav() {
 
   const nav_container =

@@ -1,4 +1,4 @@
-// js/family.js
+// js/family.js Logik für die Verwaltung der Familienmitglieder auf der Family-Seite
 
 const icons = [
   "character_baby",

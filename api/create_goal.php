@@ -1,5 +1,5 @@
 <?php
-// api/create_goal.php
+// api/create_goal.php - API-Endpunkt zum Erstellen eines neuen Ziels, einschließlich Validierung der Eingabedaten, Transaktionsmanagement und Fehlerbehandlung
 require_once '_init.php';
 
 $userId = require_user_id();

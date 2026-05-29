@@ -1,3 +1,4 @@
+// login.js: Logik für die Anmeldung bestehender Benutzer
 const login_form = document.getElementById("login_form");
 const form_message = document.getElementById("form_message");
 

@@ -1,3 +1,4 @@
+// register.js: Logik für die Registrierung neuer Benutzer
 const register_form = document.getElementById("register_form");
 const form_message = document.getElementById("form_message");
 

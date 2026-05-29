@@ -1,5 +1,5 @@
 <?php
-// api/start_round.php
+// api/start_round.php - API-Endpunkt zum Starten einer neuen Runde, einschließlich Transaktionsmanagement und Fehlerbehandlung
 
 require_once '_init.php';
 require_once '_game_logic.php';

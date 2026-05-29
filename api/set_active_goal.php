@@ -1,5 +1,5 @@
 <?php
-// api/set_active_goal.php
+// api/set_active_goal.php - API-Endpunkt zum Setzen eines aktiven Ziels, einschließlich Validierung der Goal-ID und Transaktionsmanagement
 require_once '_init.php';
 
 $userId = require_user_id();

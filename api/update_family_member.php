@@ -1,5 +1,5 @@
 <?php
-// api/update_family_member.php
+// api/update_family_member.php - API-Endpunkt zum Aktualisieren eines Familienmitglieds, einschließlich Validierung der Eingabedaten und Überprüfung auf doppelte Buzzer-Zuweisungen
 
 require_once '_init.php';
 

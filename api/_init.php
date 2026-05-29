@@ -1,5 +1,5 @@
 <?php
-// api/_init.php
+// api/_init.php - Initialisierungsdatei für API-Endpunkte, die gemeinsame Funktionen und Konfigurationen bereitstellt, einschließlich Benutzersitzungsvalidierung, JSON-Antwortformatierung und Fehlerbehandlung
 declare(strict_types=1);
 
 ini_set('session.cookie_httponly', '1');

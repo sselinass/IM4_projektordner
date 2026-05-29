@@ -1,5 +1,5 @@
 <?php
-// api/load.php
+// api/load.php - API-Endpunkt zum Verarbeiten von Events von physischen Computern, einschließlich Validierung der Eingabedaten, Transaktionsmanagement und Fehlerbehandlung
 
 require_once '_init.php';
 require_once '_game_logic.php';

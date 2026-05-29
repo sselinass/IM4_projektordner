@@ -1,5 +1,5 @@
 <?php
-// api/create_family_member.php
+// api/create_family_member.php - API-Endpunkt zum Erstellen eines neuen Familienmitglieds, einschließlich Validierung der Eingabedaten, Transaktionsmanagement und Fehlerbehandlung
 
 require_once '_init.php';
 

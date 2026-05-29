@@ -1,5 +1,5 @@
 <?php
-// register.php
+// register.php - API-Endpunkt zur Registrierung eines neuen Benutzers, einschließlich Validierung der Eingabedaten, Überprüfung auf doppelte E-Mail-Adressen und sichere Passwort-Hashing
 session_start();
 header('Content-Type: application/json');
 

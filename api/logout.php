@@ -1,5 +1,5 @@
 <?php
-// logout.php
+// logout.php - API-Endpunkt zum Abmelden eines Benutzers, einschließlich Ende der Sitzung und Rückgabe einer JSON-Antwort
 session_start();
 $_SESSION = [];
 session_destroy();

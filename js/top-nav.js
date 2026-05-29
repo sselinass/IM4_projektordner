@@ -1,3 +1,5 @@
+// top-nav.js: Dynamisches Laden der Top-Navigation und Hervorheben des aktiven Links
+
 async function loadTopNavigation() {
   const container =
     document.getElementById("top_nav_container");

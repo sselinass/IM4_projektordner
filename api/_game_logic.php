@@ -1,5 +1,5 @@
 <?php
-// api/_game_logic.php
+// api/_game_logic.php - Gemeinsame Spiellogik-Funktionen für die API-Endpunkte, einschließlich Event-Verarbeitung, Punkteberechnung, Rundenerstellung und Fehlerbehandlung
 
 class GameException extends Exception
 {

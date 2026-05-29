@@ -1,5 +1,5 @@
 <?php
-// api/collect_goal.php
+// api/collect_goal.php - API-Endpunkt zum Sammeln von Punkten für das aktive Ziel eines Benutzers, einschließlich Validierung der Goal-ID, Transaktionsmanagement und Fehlerbehandlung
 require_once '_init.php';
 
 $userId = require_user_id();

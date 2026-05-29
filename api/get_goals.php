@@ -1,5 +1,5 @@
 <?php
-// api/get_goals.php
+// api/get_goals.php - API-Endpunkt zum Abrufen der aktuellen und zukünftigen Ziele eines Benutzers, einschließlich Validierung der Benutzersitzung und Fehlerbehandlung
 require_once '_init.php';
 
 $userId = require_user_id();

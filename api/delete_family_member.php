@@ -1,5 +1,5 @@
 <?php
-// api/delete_family_member.php
+// api/delete_family_member.php - API-Endpunkt zum Deaktivieren eines Familienmitglieds, einschließlich Validierung der Mitglieds-ID, Transaktionsmanagement und Fehlerbehandlung
 
 require_once '_init.php';
 
