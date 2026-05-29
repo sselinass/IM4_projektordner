@@ -35,9 +35,7 @@
 ![Bild Userflow](resources/img-README/IM%204%20–%20App-Konzeption_ReadySetDinner_Seite_1.jpg)
 
 **Screen Flow** (Screenshot aus Figma)
-
-FEHLT NOCH umbauen in figma weil zu gross dann pdf export und von dort als bild exportieren und im img-Readme ablegen
-
+![Bild Userflow](resources/img-README/IM%204%20–%20App-Konzeption_ReadySetDinner_Seite_2.jpg)
 
 **Welche Features waren angedacht?**
 
