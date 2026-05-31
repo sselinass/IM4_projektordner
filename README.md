@@ -88,7 +88,7 @@ Nicht umgesetzt weil: Wir haben uns dagegen entschieden, weil das bedeuten würd
 ### Setup
 
 * **WebApp:** [Link zur Redy Set Dinner Website](https://im4.mathis-tobler.ch)  
-* **Video-Dokumentation:** [Link zum Video auf Youtube FEHLT NOCH!!!!](http://link.zum.video) 
+* **Video-Dokumentation:** [Link zum Video auf Youtube](https://youtu.be/IIh378IriPY) 
 
 #### Installationsanleitung WebApp
 
@@ -223,11 +223,11 @@ Der folgende Aufbau zeigt das vollständige Physical-Computing-System von Ready 
 
 ![Aufbau von oben](resources/img-README/IM4_ReadySetDinner_Foto2.jpeg)
 
-## Komponentenplan (NOCH BILD EINFÜGEN)
+## Komponentenplan
 
 Der Komponentenplan zeigt die logischen Verbindungen zwischen Hardware, ESP32, Web-App und Datenbank.
 
-![Komponentenplan](resources/img-README/xxx)
+![Komponentenplan](resources/img-README/Komponentenplan.png)
 
 ## Steckplan
 
@@ -462,7 +462,7 @@ BILD REBECCA anpassen
 * **Datenschnittstelle:** [*zwischen WebApp und Physical Computing*\] 
 Die Datenschnittstelle liegt in der Datenbank bei buzzer_events oder input_events???
 
-* **ERM:** [*Erklärung und Schaubild*\]  
+* **ERM:** Im ERM Sieht man wie unsere Datenbankstruktur aufgebaut ist.[ERM-Datenbankschema](resources/img-README/IM4_ERM.png).
 
 
 * **Authentifizierung:** [*Erklärung*\]
