@@ -180,7 +180,7 @@ Physical Computing (ESP32 / Arduino):
 **6. In Betriebnahme physische Artefakt**
 * Wie? FEHLT NOCH
 
-#### Bauanleitung Physical Computing
+## Bauanleitung Physical Computing
 
 ### Ziel des Physical Computing Systems
 
@@ -214,6 +214,41 @@ Für den Nachbau werden folgende Komponenten benötigt:
 Die genaue Verkabelung ist im Steckplan dokumentiert.
 
 ---
+
+## Fertiger Aufbau
+
+Der folgende Aufbau zeigt das vollständige Physical-Computing-System von Ready Set Dinner.
+
+![Gesamtaufbau](resources/img-README/IM4_ReadySetDinner_Foto1.jpeg)
+
+![Aufbau von oben](resources/img-README/IM4_ReadySetDinner_Foto2.jpeg)
+
+## Komponentenplan (NOCH BILD EINFÜGEN)
+
+Der Komponentenplan zeigt die logischen Verbindungen zwischen Hardware, ESP32, Web-App und Datenbank.
+
+![Komponentenplan](resources/img-README/xxx)
+
+## Steckplan
+
+Der Steckplan zeigt die genaue Verkabelung aller Komponenten am ESP32-C6.
+
+![Steckplan](resources/img-README/IM4_ReadySetDinner_Steckplatine.png)
+
+## GPIO-Belegung
+
+| Komponente | GPIO |
+|------------|------|
+| Start Button | GPIO 7 |
+| Start LED | GPIO 8 |
+| Buzzer 1 | GPIO 10 |
+| LED Buzzer 1 | GPIO 2 |
+| Buzzer 2 | GPIO 6 |
+| LED Buzzer 2 | GPIO 5 |
+| Buzzer 3 | GPIO 0 |
+| Buzzer 4 | GPIO 1 |
+| Gemeinsame LED Buzzer 3 + 4 | GPIO 3 |
+| Piepser KY-012 | GPIO 11 |
 
 ## Hardware aufbauen
 
