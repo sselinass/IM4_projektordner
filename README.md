@@ -180,17 +180,251 @@ Physical Computing (ESP32 / Arduino):
 **6. In Betriebnahme physische Artefakt**
 * Wie? FEHLT NOCH
 
-#### Bauanleitung Physical Computing FEHLT NOCH
+#### Bauanleitung Physical Computing
 
-* ***Was muss ich wie bauen, verbinden, installieren?***  
-* *ergänze: **Komponentenplan** (betrifft Physical Computing, vgl. Slides Kapitel 15): Schaubild enthält*  
-  * *die eingesetzten Komponenten*  
-  * *die verbundenen Sensoren und Aktoren*  
-  * *die Programme (mit Dateinamen)*  
-  * *die Kommunikationswege*  
-* *ergänze: **Steckplan** (betrifft Physical Computing, vgl. Slides Kapitel 15): generiert z.B. mit Fritzing (empfohlen), Tinkercad, Wokwi*  
-  * *beachtet die [Fritzing Parts](https://github.com/Interaktive-Medien/im_physical_computing/tree/main/15_Intro_Projektdoku) extra für euch*  
-* *ggf. **Bildmaterial***
+### Ziel des Physical Computing Systems
+
+Das Physical-Computing-System bildet die Verbindung zwischen der realen Welt und der Web-App.
+
+Sobald das Essen bereit ist, kann eine Person den Startknopf drücken. Dadurch wird ein Dinner Call ausgelöst. Die Teilnehmenden werden durch Licht- und Tonsignale informiert, dass sie zum Esstisch kommen sollen.
+
+Jede Person besitzt einen eigenen Buzzer. Wer zuerst am Tisch ankommt und seinen Buzzer drückt, erhält die meisten Punkte.
+
+Alle Ereignisse werden automatisch an die Web-App übertragen und dort gespeichert.
+
+---
+
+## Benötigte Komponenten
+
+Für den Nachbau werden folgende Komponenten benötigt:
+
+| Anzahl | Komponente |
+|----------|----------|
+| 1 | ESP32-C6 |
+| 1 | Start-Button mit integrierter LED |
+| 4 | Taster (Buzzer) |
+| 3 | LEDs |
+| 1 | KY-012 Piepser |
+| mehrere | Widerstände |
+| mehrere | Jumperkabel |
+| 1 | Breadboard |
+| 1 | USB-Kabel |
+| 1 | Computer mit Arduino IDE |
+
+Die genaue Verkabelung ist im Steckplan dokumentiert.
+
+---
+
+## Hardware aufbauen
+
+### Start-Button
+
+Der Start-Button dient zum Auslösen einer neuen Runde.
+
+Beim Drücken des Start-Buttons:
+
+- startet die Zeitmessung
+- beginnt der Piepser zu piepsen
+- leuchten die Status-LEDs auf
+- wird ein Start-Ereignis an die Datenbank gesendet
+
+Zusätzlich besitzt der Start-Button eine integrierte LED, welche während einer laufenden Runde aktiv bleibt.
+
+---
+
+### Teilnehmer-Buzzer
+
+Für jede Person existiert ein eigener Buzzer.
+
+Beispiel:
+
+| Person | Farbe |
+|----------|----------|
+| Person A | Blau |
+| Person B | Pink |
+| Person C | Grün |
+| Person D | Orange |
+
+Wird ein Buzzer gedrückt:
+
+- wird die Reaktionszeit gemessen
+- wird der Tastendruck gespeichert
+- wird die zugehörige LED ausgeschaltet
+- wird das Ereignis an die Datenbank gesendet
+
+Dadurch ist jederzeit sichtbar, welche Personen bereits am Tisch angekommen sind.
+
+---
+
+### LEDs
+
+Die LEDs zeigen den aktuellen Spielstatus an.
+
+Nach dem Start:
+
+- alle LEDs leuchten
+
+Nach einem erfolgreichen Tastendruck:
+
+- die entsprechende LED wird ausgeschaltet
+
+Sobald alle Personen ihren Buzzer gedrückt haben:
+
+- alle LEDs werden ausgeschaltet
+- die Runde endet
+
+---
+
+### Piepser
+
+Der KY-012 Piepser dient als akustisches Signal.
+
+Beim Start einer Runde:
+
+- beginnt der Piepser zu piepsen
+
+Der Piepser wird automatisch deaktiviert:
+
+- wenn alle Buzzer gedrückt wurden
+- oder nach einer definierten Zeit
+
+Dies verhindert eine dauerhafte Lärmbelastung.
+
+---
+
+## ESP32 programmieren
+
+### Arduino IDE installieren
+
+1. Arduino IDE herunterladen und installieren.
+2. ESP32 Board-Paket installieren.
+3. ESP32-C6 mit dem Computer verbinden.
+4. Das Projekt `PhysicalComputing.ino` öffnen.
+
+---
+
+### WLAN konfigurieren
+
+Im Arduino-Code müssen die Zugangsdaten des WLANs eingetragen werden.
+
+```cpp
+const char* ssid = "WLAN_NAME";
+const char* pass = "WLAN_PASSWORT";
+```
+
+Der ESP32 verbindet sich beim Start automatisch mit dem WLAN.
+
+---
+
+### API-Adresse konfigurieren
+
+Der ESP32 sendet seine Daten an die Web-App.
+
+Dazu muss die URL des Servers eingetragen werden.
+
+```cpp
+const char* serverURL = "https://DEINE-DOMAIN/api/load.php";
+```
+
+---
+
+### Sketch hochladen
+
+1. ESP32 auswählen.
+2. Richtigen COM-Port auswählen.
+3. Sketch kompilieren.
+4. Sketch auf den ESP32 hochladen.
+
+Nach erfolgreichem Upload startet das System automatisch.
+
+---
+
+## Kommunikation mit der Web-App
+
+Der ESP32 sendet bei jedem Ereignis eine HTTP-POST-Anfrage an die Datei `load.php`.
+
+Folgende Ereignisse werden übertragen:
+
+- Start
+- Buzzer_1
+- Buzzer_2
+- Buzzer_3
+- Buzzer_4
+- End
+
+Beispiel einer gesendeten Nachricht:
+
+```json
+{
+  "buzzer_events": "Buzzer_1",
+  "timestamp": "2026-05-21 12:30:55",
+  "id_users": 12
+}
+```
+
+Die Datei `load.php` empfängt diese Daten und speichert sie in der Datenbank.
+
+---
+
+## Ablauf einer Spielrunde
+
+### Runde starten
+
+Eine Person drückt den Start-Button.
+
+Folgende Aktionen werden ausgelöst:
+
+- Timer startet
+- LEDs werden eingeschaltet
+- Piepser wird aktiviert
+- Start-Ereignis wird gespeichert
+
+### Teilnehmende reagieren
+
+Die Familienmitglieder laufen zum Esstisch und drücken ihren Buzzer.
+
+Die Web-App berechnet anschliessend:
+
+- Reaktionszeit
+- Platzierung
+- Punkte
+
+### Runde beenden
+
+Eine Runde endet automatisch wenn:
+
+- alle vier Buzzer gedrückt wurden
+- oder das Zeitlimit erreicht wurde
+
+Anschliessend werden alle LEDs und der Piepser deaktiviert.
+
+---
+
+## Fehlerbehebung
+
+Falls das System nicht funktioniert:
+
+1. WLAN-Verbindung prüfen.
+2. API-URL kontrollieren.
+3. Datenbankverbindung prüfen.
+4. Verkabelung anhand des Steckplans kontrollieren.
+5. Serielle Ausgabe im Arduino Serial Monitor prüfen.
+
+Bei Software-Problemen kann es hilfreich sein, KI-Tools wie ChatGPT oder GitHub Copilot zur Analyse von Fehlermeldungen und zur Fehlersuche einzusetzen. Während der Entwicklung dieses Projekts wurden solche Werkzeuge ebenfalls unterstützend verwendet.
+
+---
+
+## Weitere Dokumentationen
+
+Für das vollständige Verständnis des Systems empfehlen wir zusätzlich folgende Dokumente:
+
+- Komponentenplan
+- Steckplan
+- ERM (Entity Relationship Model)
+- Systemarchitektur
+- Video-Dokumentation
+
+Diese Dokumente beschreiben die Hardware, die Datenbankstruktur, die Kommunikationswege sowie die Zusammenhänge zwischen Web-App und Physical Computing im Detail.
 
 ## Technische Details
 
