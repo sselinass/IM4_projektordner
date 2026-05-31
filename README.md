@@ -88,6 +88,9 @@ Nicht umgesetzt weil: Wir haben uns dagegen entschieden, weil das bedeuten würd
 ### Setup
 
 * **WebApp:** [Link zur Redy Set Dinner Website](https://im4.mathis-tobler.ch)  
+WICHTIG! Login für Test:
+Benutzer: im4@dozenten.ch 
+Passwort:12345
 * **Video-Dokumentation:** [Link zum Video auf Youtube](https://youtu.be/IIh378IriPY) 
 
 #### Installationsanleitung WebApp
