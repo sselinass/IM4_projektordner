@@ -445,59 +445,50 @@ Bei Software-Problemen kann es hilfreich sein, KI-Tools wie ChatGPT oder GitHub 
 
 ## Technische Details
 
-// Hier sollte das Verständnis ersichtlich sein / Wie stehen die Dateien in Beziehung zueinander, Wie reden Die Dateien miteinander, Wie ist der Weg der Daten
-
-* **Projektstruktur / Code-Struktur:** \
-[*Hinweis: Der Code selbst muss im Repository liegen und im Kopfbereich jeder Datei eine kurze Zusammenfassung enthalten.DONE Bitte noch prüfen*\]  
-
-BILD REBECCA anpassen
-
-
 * **Datenschnittstelle:** [*zwischen WebApp und Physical Computing*\] 
-Die Datenschnittstelle liegt in der Datenbank bei buzzer_events oder input_events???
+Die Datenschnittstelle wird im ERM aufgezeigt. 
 
 * **ERM:** Im ERM Sieht man wie unsere Datenbankstruktur aufgebaut ist.
 ![Steckplan](resources/img-README/IM4_ERM.png)
 
-
-* **Authentifizierung:** [*Erklärung*\]
-
 ## Known Bugs
 
 * Was funktioniert noch nicht einwandfrei? 
-soweit haben wir keine Bugs entdeckt. 
+Soweit haben wir keine Bugs entdeckt. 
 
 * Was ist uns aufgefallen bei der Entwicklung?  
-Ein sinnvoller Aufbau der Datenbank muss anfänglich besprochen werden und dann strikt befolgt.
+Ein sinnvoller Aufbau der Datenbank muss anfänglich besprochen und dann strikt befolgt werden.
 
 * Was könnte noch verbessert werden?
-Die App könnte noch weiter ausgebaut werden mit den angänglich geplanten Funktionen.
+Die App könnte noch weiter ausgebaut werden mit den anfänglich geplanten Funktionen.
 
 ## Umsetzungsprozess
 
 **Reflexion / Erfahrung / Lernfortschritt:** 
 *Was haben wir gelernt?*
-* Nutzen und austesten von Figma Make
+* Nutzen und Austesten von Figma Make
 * Umgang und Austausch zwischen WebApp und Physical Computing Team
-* Frontend und Backend coden/ programmieren und wie die einzelnen Files zusammenarbeiten
+* Frontend und Backend Coden/Programmieren und wie die einzelnen Files zusammenarbeiten
 * Repetition html und css
 
 
 *Würden wir es nochmal genauso machen? Was war gut, was war schlecht?*  
-* Das Projekt hat sehr gut funktioniert und wir sind zufrieden mit der Umsetzung.
+* Das Projekt hat sehr gut funktioniert und wir sind zufrieden mit der Umsetzung. Bei einem nächsten Mal würden wir früher als Team zusammenarbeiten und uns austauschen, damit ein solcher Fehler wie mit der Datenbank nicht passiert. Ebenfalls würden wir gegenseitig mehr versuchen zu verstehen, was das jeweils andere Team erarbeitet, damit man die Schnittstellen besser versteht und auch besser auf Fehlersuche gehen kann. 
 
 **Herausforderungen & Lösungen:** [*Verworfene Ansätze, Fehler, Umplanungen*\] 
 * Das schwierigste war das Aufsetzen des Projekts, so dass wir alle zusammenarbeiten konnten und immer auf dem aktuellen Stand waren. 
-* WebApp: Uns hat die Datenbankstruktur und die Logik in den Javascript Files ab und zu vor herausvorderungen gestellt.
-* Unser Wissen betreffend Javascript und php ist noch nicht sehr ausgereift, daher war es anfangs schwierig zu verstehen was der Code macht respektive was die Fehlermeldungen bedeuten und wie wir diese lösen.
+* WebApp: Uns hat die Datenbankstruktur und die Logik in den Javascript Files ab und zu vor Herausvorderungen gestellt.
+* Unser Wissen betreffend Javascript und php ist noch nicht sehr ausgereift, daher war es anfangs schwierig zu verstehen, was der Code macht, respektive was die Fehlermeldungen bedeuten und wie wir diese lösen.
 * WebApp: Es war schwer eine funktionierende Datenbankstruktur aufzusetzen, die auch für das Physical Computing Team funktioniert. Hauptsächlich weil unserem Teil des Teams das ganze Wissen zu Physical Computing fehlte, da wir in diesem Bereich keine Einführung hatten.
-
+* Physical Computing: Anfangs war es schwer zu verstehen, auf welcher Seite die Berechnungen passieren und wer für welchen Part verantwortliche ist. Insbesondere, was überhaupt auf unserer Seite machbar ist und wo es mit einer php Datei einfacher gelöst werden könnte. Durch das wir mit physischen Componenten arbeiteten, war es manchmal schwierig, ist die Lötstelle, das Kabel, der Sensor/Aktor, die WLAN-Verbindung oder doch der Code das Problem. Dadurch haben wir aber die einzelnen Schritte etwas besser verstanden und wurden im Fehlerbegrenzen immer besser und schneller. 
 
 **KI-Einsatz:** *Dokumentation der verwendeten KI-Tools und deren Nutzen (KI ist nicht verboten)*  
 * Wir haben mit ChatGPT gearbeitet, um uns beim Coden und bei Fehlermeldungen zu helfen.
-* Zum korrigieren des Codes, für Erklärungen oder bei Fehlermeldungen haben wir Copilot verwendet.
+* Zum Korrigieren des Codes, für Erklärungen oder bei Fehlermeldungen haben wir Copilot verwendet.
+* Wir haben ChatGPT verwendet, um den Arduino Code aufzubauen und zu verstehen.
+* Mit ChatGPT haben wir den funktionierenden Code immer weiter aufgebaut und konnten einfach noch einen weiteren Buzzer hinzufügen.
 
 
 **Fazit:**  
-* Wir sind sehr zufrieden, wie das Team zusammengearbeitet und sich gegenseitg ausgeholfen hat. Das Endresultat funktioniert so, wie wir es uns vorgestellt haben und kann sich sehen lassen.
+* Wir sind sehr zufrieden, wie das Team zusammengearbeitet und sich gegenseitg ausgeholfen hat. Das Endresultat funktioniert so, wie wir es uns vorgestellt haben und kann sich sehen lassen. Zudem hat es Spass gemacht, das ganze im 3D Modell spürbar darzustellen und als Prototypen auszutesten. 
 
