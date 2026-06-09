@@ -100,12 +100,9 @@ Passwort:12345
 * Webhosting und Domain (Bsp. Informaniak oder Hostpoint)
 * Visual Studio Code (oder ähnliches Programm) zum Coden und Programmieren
 * Arduino (oder ähnliches Programm), um den Code auf den physichen Komponenten (in unserem Fall den esp32-c6-n8) zu laden
-* Komponenten Physical Computing: esp32-c6-n8
+* Komponenten Physical Computing: esp32-c6-n8 und unterschiedliche Sensoren/Aktoren (werden später ausführlicher beschrieben)
 
-**2. Installationen auf Webserver:**
-* FEHLT NOCH
-
-**3. Datenbank import:** 
+**2. Datenbank Import:** 
 Die Relationale Datenbank wurde in phpMyAdmin erstellt. Die einzelnen Datensäte werden anhand der php Dateien importiert.
 Wichtige API-Endpunkte (Übersicht):
 
@@ -143,10 +140,10 @@ Physical Computing (ESP32 / Arduino):
 - Sendet Events (z.B. `Start`, `Buzzer_1..4`, `End`) als **HTTP POST JSON** an `api/load.php`.
 - Nutzt NTP-Zeit, damit Events serverseitig korrekt zeitlich eingeordnet werden können.
 
-**4. DB-Credentials eintragen** 
+**3. DB-Credentials eintragen** 
 * config.php 
 
-**5. Coden/programmieren der einzelnen Seiten** 
+**4. Coden/programmieren der einzelnen Seiten** 
 
 | .html           | .css      | .js           | .php                  |
 |-----------------|-----------|---------------|-----------------------|
@@ -178,7 +175,7 @@ Physical Computing (ESP32 / Arduino):
 
 
 
-**6. In Betriebnahme physische Artefakt**
+**5. In Betriebnahme physische Artefakt**
 * Wie? FEHLT NOCH
 
 ## Bauanleitung Physical Computing
