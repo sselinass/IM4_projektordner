@@ -143,7 +143,7 @@ Physical Computing (ESP32 / Arduino):
 **3. DB-Credentials eintragen** 
 * config.php 
 
-**4. Coden/programmieren der einzelnen Seiten** 
+**4. Coden/Programmieren der einzelnen Seiten** 
 
 | .html           | .css      | .js           | .php                  |
 |-----------------|-----------|---------------|-----------------------|
