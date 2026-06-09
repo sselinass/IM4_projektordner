@@ -95,14 +95,12 @@ Passwort:12345
 
 #### Installationsanleitung WebApp
 
-***verständliche** Schritt-für-Schritt-Anleitung für Aussenstehende, um das Projekt zu klonen und auf einem eigenen Server zu installieren*
-
 **1. Infrastruktur:**
 * Datenbank
 * Webhosting und Domain (Bsp. Informaniak oder Hostpoint)
-* Visual Studio Code (oder ähnliches Programm) zum coden und programmieren
-* Arduino (oder ähnliches Programm), um Daten der physichen Komponenten in die Datenbank zu speichern
-* Komponenten Physical Computing: FEHLT NOCH
+* Visual Studio Code (oder ähnliches Programm) zum Coden und Programmieren
+* Arduino (oder ähnliches Programm), um den Code auf den physichen Komponenten (in unserem Fall den esp32-c6-n8) zu laden
+* Komponenten Physical Computing: esp32-c6-n8
 
 **2. Installationen auf Webserver:**
 * FEHLT NOCH
