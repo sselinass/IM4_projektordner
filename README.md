@@ -8,7 +8,7 @@
 * **Name des Projekts:** Ready Set Dinner   
 * **Team Physical Computing:** Rebecca Baumberger und Selina Schöpfer 
 * **Team WebApp:** Mathis Tobler und Melanie Bürgin
-* **Welches Problem im Alltag von Eltern mit kleinen Kindern wird gelöst?**  Die Eltern können durch einen Knopfdruck die Kinder an den Tisch beordern, ohne durch die ganze Wohnung schreien zu müssen oder die Kinder im Haus zusammen zu suchen. Die Eltern profitieren, indem sie ihre Kinder schnell und einfach rufen können. Die Kinder haben davon ein gemeinsames lustiges Erlebnis und die ganze Famile vermeidet unnötigen streit durch zu spät kommen. 
+* **Welches Problem im Alltag von Eltern mit kleinen Kindern wird gelöst?**  Die Eltern können durch einen Knopfdruck die Kinder an den Tisch beordern, ohne durch die ganze Wohnung schreien zu müssen oder die Kinder im Haus zusammen zu suchen. Die Eltern profitieren, indem sie ihre Kinder schnell und einfach rufen können. Die Kinder haben davon ein gemeinsames lustiges Erlebnis und die ganze Famile vermeidet unnötigen Streit durch zu spät kommen. 
 * **Was ist der „Sinn und Zweck“ des Systems?** Es wird anhand eines gemeinsamen Spiels daran gearbeitet, dass die ganze Familie pünktlich am Esstisch sitzt.
 
 
