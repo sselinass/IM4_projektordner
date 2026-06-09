@@ -174,10 +174,6 @@ Physical Computing (ESP32 / Arduino):
 | top-nav.html    |           | top-nav.js    |
 
 
-
-**5. In Betriebnahme physische Artefakt**
-* Wie? FEHLT NOCH
-
 ## Bauanleitung Physical Computing
 
 ### Ziel des Physical Computing Systems
@@ -209,7 +205,7 @@ Für den Nachbau werden folgende Komponenten benötigt:
 | 1 | USB-Kabel |
 | 1 | Computer mit Arduino IDE |
 
-Die genaue Verkabelung ist im Steckplan dokumentiert.
+Die genaue Verkabelung ist im Steckplan dokumentiert. 
 
 ---
 
