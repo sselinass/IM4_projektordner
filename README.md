@@ -460,7 +460,8 @@ BILD REBECCA anpassen
 * **Datenschnittstelle:** [*zwischen WebApp und Physical Computing*\] 
 Die Datenschnittstelle liegt in der Datenbank bei buzzer_events oder input_events???
 
-* **ERM:** Im ERM Sieht man wie unsere Datenbankstruktur aufgebaut ist.[ERM-Datenbankschema](resources/img-README/IM4_ERM.png).
+* **ERM:** Im ERM Sieht man wie unsere Datenbankstruktur aufgebaut ist.
+![Steckplan](resources/img-README/IM4_ERM.png)
 
 
 * **Authentifizierung:** [*Erklärung*\]
